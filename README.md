@@ -5,7 +5,7 @@
 `edges` \
 `<edges> (u.id -> v.id)` \
 `level` \
-`<level>` \
+`<level>`
 
 **Note**
 1. Node id must be 1,2,3,...,n
