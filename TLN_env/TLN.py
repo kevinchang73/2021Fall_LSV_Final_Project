@@ -1,4 +1,6 @@
 import sys
+import random
+import math
 
 class Node:
     def __init__(self, id, isPI, isPO):
@@ -114,6 +116,57 @@ class Tln:
                 error += 1
         return error
     
+    def collect_functions(self, funcFile, num):
+        functs = set()
+        count = 0
+        while len(functs) < num:
+            self.random_weights()
+            self.random_thresholds()
+            #self.print_weights()
+            #self.print_thresholds()
+            funct = []
+            for inp in range(2**len(self.pis)):
+                temp = bin(inp)[2:].zfill(len(self.pis))
+                values = [int(n) for n in temp]
+                self.propagate(values)
+                outputs = self.collect_outputs()
+                funct = funct + outputs
+            functs.add(tuple(funct))
+            count += 1
+        #print('Iterations = ' + str(count))
+        out_str = []
+        for inp in range(2**len(self.pis)):
+            out_str.append(bin(inp)[2:].zfill(len(self.pis)) + ' ')
+        out_str.append('\n')
+        for funct in sorted(functs):
+            for x in funct:
+                out_str.append(str(int(x)) + ' ')
+            out_str.append('\n')
+        f = open(funcFile, 'w')
+        f.writelines(out_str)
+            
+    def random_weights(self):
+        for edge in self.edges:
+            edge.weight = random.uniform(-1,1)
+    def random_thresholds(self):
+        for node in self.nodes:
+            if not node.isPI:
+                node.threshold = random.uniform(-1,1)
+    def collect_outputs(self) -> list:
+        values = []
+        for node in self.pos:
+            values.append(node.value)
+        return values
+
+    # print
+    def print_weights(self):
+        print('Weights:')
+        for edge in self.edges:
+            print(edge.weight)
+    def print_thresholds(self):
+        print('Thresholds:')
+        for node in self.nodes:
+            print(node.threshold)
     #def reward(self, weigit_threshold):
         #assign weight and threshold to the TLN
         #reward = accuracy(output, theo_output)
@@ -133,5 +186,6 @@ if __name__ == "__main__":
         myTln.set_thresholds(thresholds)
         myTln.propagate(inputs)
         errorNum = myTln.evaluate(outputs)
-        print("Number of errors = " + str(errorNum))
+        print('Number of errors = ' + str(errorNum))
+        myTln.collect_functions(input_file.split('.')[0]+'.funct', 14)
 
