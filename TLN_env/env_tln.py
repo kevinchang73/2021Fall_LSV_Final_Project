@@ -2,61 +2,61 @@ import gym
 from gym import spaces
 from gym.utils import seeding
 import numpy as np
-from TLN import TLN
+from TLN import Tln
+import sys
 
 
-class tln(gym.Env):
+class Tln_env(gym.Env):
 
-    def __init__(self):
+    def __init__(self, inputFile):
         self.range = 1000  # +/- value the randomly select guess_number can be between
-        self.weight_bounds = 3  # Action space bounds
-        self.TLN = TLN(topology)
-        low, high = self.init_weight_and_threshold(topology);
-        self.action_space = spaces.Box(low=np.array(low), high=np.array(high)))
-        self.observation_space = spaces.Discrete(4)
+        self.weight_bound = 3  # Action space bounds
+        self.threshold_bound = 5  # Action space bounds
+        self.TLN = Tln(inputFile)
+        low, high = self.init_weight_and_threshold();
+        self.action_space = spaces.Box(low=np.array(low), high=np.array(high))
+        self.observation_space = spaces.Box(low = np.array(-1.0), high=np.array(1.0))
+        self.prev_reward = 0
 
-        self.guess_number = 0
-        self.guess_count = 0
-        self.guess_max = 200
-        self.observation = 0
+        # self.seed()
 
-        self.seed()
-        self.reset()
+    def init_weight_and_threshold(self):
+        """
+        TLN-weight: [w1, w2]
+        TLN-weight: [t1, t2, t3]
+        weight_bound = 3
+        threshold_bound = 5
+        low = [-3, -3, -5]
+        high = [3, 3, 5]
+        return lower bound and upper bound of action_space (1-dim array)
+        """
+        low = [-self.weight_bound]*len(self.TLN.edges) + [-self.threshold_bound]*(len(self.TLN.nodes) - 2)
+        high = [self.weight_bound]*len(self.TLN.edges) + [self.threshold_bound]*(len(self.TLN.nodes) - 2)
+        return low, high
 
-    def init_weight_and_threshold(self, topology):
-        #TLN-weight: [[[w11, w12], [w13, w14]], [[w21, w22]]]
-        #TLN-weight: [[t11, t12], [t2]]
-        #weight_bound = 3
-        #threshold_bound = 5
-        #low = [-3, -3, -5, -3, -3, -5, -3, -3, -5]
-        #high = [3, 3, 5, 3, 3, 5, 3, 3, 5]
-        #return lower bound and upper bound of action_space (1-dim array)
     # def seed(self, seed=None):
     #     self.np_random, seed = seeding.np_random(seed)
     #     return [seed]
 
-    def step(self, action):
+    def step(self, action, input_values, output_values):
         # assert self.action_space.contains(action)
 
-        if action < self.guess_number:
-            self.observation = 1
+        self.TLN.set_weights(action[0:len(self.TLN.edges)])
+        self.TLN.set_thresholds([0, 0] + action[len(self.TLN.edges):])
+        self.TLN.propagate(input_values)
+        reward = 1.0 - self.TLN.evaluate(output_values)/len(output_values)
+        print("reward: ", reward)
+        self.observation = reward - self.prev_reward if self.prev_reward else 0.0
+        self.prev_reward = reward
 
-        elif action == self.guess_number:
-            self.observation = 2
-
-        elif action > self.guess_number:
-            self.observation = 3
-
-        reward = ((min(action, self.guess_number) + self.bounds) / (max(action, self.guess_number) + self.bounds)) ** 2
-
-        self.guess_count += 1
-        done = self.guess_count >= self.guess_max
-
-        return self.observation, reward, done, {"guess_number": self.guess_number, "guesses": self.guess_count}
-
+        return self.observation, reward
     def reset(self):
-        self.guess_number = self.np_random.uniform(-self.range, self.range)
-        print('guess number = ', self.guess_number)
-        self.guess_count = 0
+        self.prev_reward = 0
         self.observation = 0
         return self.observation
+
+if __name__ == "__main__":
+    if sys.argv[1] == 'read':
+        input_file = sys.argv[2]
+        model = Tln_env(input_file)
+        model.step([1, -0.5, 1], [1, 1], [0])

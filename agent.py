@@ -17,3 +17,25 @@ class Network(nn.Module):
         hid = torch.tanh(self.fc1(state))
         hid = torch.tanh(self.fc2(hid))
         return F.softmax(self.fc3(hid), dim = 1)
+
+
+class Agent():
+    
+    def __init__(self):
+        self.network = Network()
+        self.optimizer = optim.SGD(self.network.parameters(), lr=0.001)
+
+    def learn(self, log_probs, rewards):
+        loss = (-log_probs * rewards).sum()
+
+        self.optimizer.zero_grad()
+        loss.backward()
+        self.optimizer.step()
+
+    def sample(self, state):
+        action_prob = self.network(torch.FloatTensor(state))
+        action_dist = Categorical(action_prob)
+        action = action_dist.sample()
+        log_prob = action_dist.log_prob(action)
+        return action.item(), log_prob
+
