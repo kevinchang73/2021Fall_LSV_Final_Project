@@ -1,0 +1,35 @@
+nodeID isPI isPO
+1 1 0
+2 1 0
+3 1 0
+4 1 0
+5 0 0
+6 0 0
+7 0 0
+8 0 1
+9 0 1
+edges
+1 -> 5
+1 -> 6
+1 -> 7
+2 -> 5
+2 -> 6
+2 -> 7
+3 -> 5
+3 -> 6
+3 -> 7
+4 -> 5
+4 -> 6
+4 -> 7
+5 -> 8
+5 -> 9
+6 -> 8
+6 -> 9
+7 -> 8
+7 -> 9
+levels
+3
+# level 1: 4 PIs
+# level 2: 3 TLGs
+# level 3: 2 TLGs
+# Fully-connected between neighbor levels

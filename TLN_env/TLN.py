@@ -116,9 +116,10 @@ class Tln:
                 error += 1
         return error
     
-    def collect_functions(self, funcFile, num):
+    def collect_functions(self, funcFile, num = 30000):
         functs = set()
         count = 0
+        stop_count = 0
         while len(functs) < num:
             self.random_weights()
             self.random_thresholds()
@@ -131,8 +132,15 @@ class Tln:
                 self.propagate(values)
                 outputs = self.collect_outputs()
                 funct = funct + outputs
+            size_orig = len(functs)
             functs.add(tuple(funct))
+            if len(functs) == size_orig:
+                stop_count += 1
+            else:
+                stop_count = 0
             count += 1
+            if stop_count > 100:
+                break
         #print('Iterations = ' + str(count))
         out_str = []
         for inp in range(2**len(self.pis)):
@@ -144,7 +152,6 @@ class Tln:
             out_str.append('\n')
         f = open(funcFile, 'w')
         f.writelines(out_str)
-            
     def random_weights(self):
         for edge in self.edges:
             edge.weight = random.uniform(-1,1)
@@ -167,17 +174,53 @@ class Tln:
         print('Thresholds:')
         for node in self.nodes:
             print(node.threshold)
-    #def reward(self, weigit_threshold):
-        #assign weight and threshold to the TLN
-        #reward = accuracy(output, theo_output)
-        #return reward
+
+class TlnGenerator:
+    def __init__(self, level, numNodes, prob = 1):
+        assert level == len(numNodes)
+        self.level = level
+        self.numNodes = numNodes # number of node in each level
+        self.prob = prob
+    def write_tln(self, tlnFile):
+        f = open(tlnFile, 'w')
+        out_str = []
+        out_str.append('nodeID isPI isPO\n')
+        idCount = 0
+        for i in range(self.level):
+            if i == 0:
+                for j in range(self.numNodes[i]):
+                    idCount += 1
+                    out_str.append(str(idCount) + ' 1 0\n')
+            elif i == self.level - 1:
+                for j in range(self.numNodes[i]):
+                    idCount += 1
+                    out_str.append(str(idCount) + ' 0 1\n')
+            else:
+                for j in range(self.numNodes[i]):
+                    idCount += 1
+                    out_str.append(str(idCount) + ' 0 0\n')
+        out_str.append('edges\n')
+        idCount = 1
+        for i in range(self.level):
+            if i < self.level - 1:
+                for u in range(idCount, idCount+self.numNodes[i]):
+                    for v in range(idCount+self.numNodes[i], idCount+self.numNodes[i]+self.numNodes[i+1]):
+                        temp = random.random()
+                        if temp < self.prob:
+                            out_str.append(str(u) + ' -> ' + str(v) + '\n')
+                idCount += self.numNodes[i]
+        out_str.append('levels\n')
+        out_str.append(str(self.level) + '\n')
+        f.writelines(out_str)
+        f.close()
 
 if __name__ == "__main__":
-    # Usage: python3 TLN.py [read/write] filename
     if sys.argv[1] == 'read':
+    # Usage: python3 TLN.py read filename
         input_file = sys.argv[2]
         myTln = Tln(input_file)
         # example for case 0, which is a single TLG
+        '''
         weights = [1, -0.5]
         thresholds = [0, 0, 1] # need to include PIs, though their thresholds is irrelavent
         inputs = [1, 1]
@@ -187,5 +230,16 @@ if __name__ == "__main__":
         myTln.propagate(inputs)
         errorNum = myTln.evaluate(outputs)
         print('Number of errors = ' + str(errorNum))
-        myTln.collect_functions(input_file.split('.')[0]+'.funct', 14)
-
+        '''
+        myTln.collect_functions(input_file.split('.')[0]+'.funct')
+    elif sys.argv[1] == 'write':
+    # Usage: python3 TLN.py write filename prob <level> <num of nodes in each level (seperated by space)>
+        output_file = sys.argv[2]
+        prob = float(sys.argv[3])
+        level = int(sys.argv[4])
+        assert len(sys.argv) == level + 5
+        numNodes = []
+        for i in range(5,level+5):
+            numNodes.append(int(sys.argv[i]))
+        myTlnGen = TlnGenerator(level, numNodes, prob)
+        myTlnGen.write_tln(output_file)
