@@ -25,8 +25,8 @@ class Agent():
         self.network = Network(input_dim, output_dim)
         self.optimizer = optim.SGD(self.network.parameters(), lr=0.001)
 
-    def learn(self, log_probs, rewards):
-        loss = (-log_probs * rewards).sum()
+    def learn(self, rewards):
+        loss = (-rewards).sum()
 
         self.optimizer.zero_grad()
         loss.backward()

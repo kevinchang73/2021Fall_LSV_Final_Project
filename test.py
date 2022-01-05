@@ -1,12 +1,14 @@
-import gym
+# from TLN_env.env_tln import Tln_env
+import sys
 
-import TLN_env.env
+input_file = sys.argv[2]
 
-env = gym.make('TLNENV-v0')
+# env = Tln_env(input_file + ".tln")
 
-obs = env.reset()
+fi = open(input_file + ".funct", "r")
 
-for step in range(10000):
-    action = env.action_space.sample()
-    print(action)
-    obs, reward, done, info = env.step(action)
+lines = fi.readlines()[1:]
+
+lines = [list(map(int, l.strip().split(" "))) for l in lines]
+
+print(lines)
