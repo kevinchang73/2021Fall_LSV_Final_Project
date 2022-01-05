@@ -97,8 +97,8 @@ class Tln:
         for i in range(0, len(weights)):
             self.edges[i].weight = weights[i]
     def set_thresholds(self, thresholds): # thresholds is in the same order with self.nodes
-        print("threshold: ", len(thresholds))
-        print("self.nodes: ", len(self.nodes))
+        # print("threshold: ż", len(thresholds))
+        # print("self.nodes: ", len(self.nodes))
         assert len(thresholds) == len(self.nodes)
         for i in range(0, len(thresholds)):
             self.nodes[i].threshold = thresholds[i]
