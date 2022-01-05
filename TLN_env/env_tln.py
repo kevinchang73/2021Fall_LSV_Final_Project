@@ -2,7 +2,7 @@ import gym
 from gym import spaces
 from gym.utils import seeding
 import numpy as np
-from TLN.TLN import Tln
+from TLN_env.TLN.TLN import Tln
 import sys
 import math
 
@@ -71,3 +71,4 @@ if __name__ == "__main__":
         input_file = sys.argv[2]
         model = Tln_env(input_file)
         model.step([1, -0.5, 1], [0])
+        print("done")

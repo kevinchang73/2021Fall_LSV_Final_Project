@@ -1,5 +1,5 @@
 from agent import Agent
-from TLN_env.env_tln import Tln_env
+from TLN_env.env_tln import *
 import sys
 import tqdm
 import numpy as np
