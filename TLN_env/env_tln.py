@@ -2,7 +2,7 @@ import gym
 from gym import spaces
 from gym.utils import seeding
 import numpy as np
-from TLN import Tln
+from TLN.TLN import Tln
 import sys
 import math
 
