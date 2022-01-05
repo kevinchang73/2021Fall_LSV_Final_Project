@@ -4,12 +4,20 @@ import sys
 import tqdm
 import numpy as np
 import torch
-
-newAgent = Agent()
-newAgent.network.train()
+import math
+import random
 
 input_file = sys.argv[2]
-env = Tln_env(input_file)
+env = Tln_env(input_file + ".tln")
+fi = open(input_file + ".funct", "r")
+lines = fi.readlines()[1:]
+lines = [list(map(int, l.strip().split(" "))) for l in lines]
+
+input_dim = len(lines[0])
+
+newAgent = Agent(input_dim, len(Tln_env.TLN.nodes) + len(Tln_env.TLN.edges))
+
+newAgent.network.train()
 
 EPISODE_PER_BATCH = 5  # 每蒐集 5 個 episodes 更新一次 agent
 NUM_BATCH = 400        # 總共更新 400 次
@@ -29,12 +37,9 @@ for batch in prg_bar:
         total_reward, total_step = 0, 0
 
         while True:
-
-            action, log_prob = newAgent.sample(state)
-            next_state, reward, done = env.step(action)
-
-            log_probs.append(log_prob)
-            state = next_state
+            input_values = random.choice(lines)
+            action = newAgent.sample(input_values)
+            reward, done = env.step(action)
             total_reward += reward
             total_step += 1
 
@@ -49,9 +54,9 @@ for batch in prg_bar:
     avg_final_reward = sum(final_rewards) / len(final_rewards)
     avg_total_rewards.append(avg_total_reward)
     avg_final_rewards.append(avg_final_reward)
-    prg_bar.set_description(f"Total: {avg_total_reward: 4.1f}, Final: {avg_final_reward: 4.1f}")
+    prg_bar.set_description(f"Total: {avg_total_reward: 0.6f}, Final: {avg_final_reward: 0.6f}")
 
     # 更新網路
     rewards = np.concatenate(rewards, axis=0)
     rewards = (rewards - np.mean(rewards)) / (np.std(rewards) + 1e-9)  # 將 reward 正規標準化
-    newAgent.learn(torch.stack(log_probs), torch.from_numpy(rewards))
+    newAgent.learn(torch.from_numpy(rewards))

@@ -4,6 +4,7 @@ from gym.utils import seeding
 import numpy as np
 from TLN import Tln
 import sys
+import math
 
 
 class Tln_env(gym.Env):
@@ -18,7 +19,7 @@ class Tln_env(gym.Env):
         low, high = self.init_weight_and_threshold();
         self.action_space = spaces.Box(low=np.array(low), high=np.array(high))
         self.observation_space = spaces.Box(low = np.array(-1.0), high=np.array(1.0))
-        self.prev_reward = 0
+        # self.prev_reward = 0
 
         # self.seed()
 
@@ -40,28 +41,33 @@ class Tln_env(gym.Env):
     #     self.np_random, seed = seeding.np_random(seed)
     #     return [seed]
 
-    def step(self, action, input_values, output_values):
+    def step(self, action, output_values):
         # assert self.action_space.contains(action)
 
         self.TLN.set_weights(action[0:len(self.TLN.edges)])
         self.TLN.set_thresholds([0, 0] + action[len(self.TLN.edges):])
-        self.TLN.propagate(input_values)
-        reward = 1.0 - self.TLN.evaluate(output_values)/len(output_values)
-        print("reward: ", reward)
-        self.observation = reward - self.prev_reward if self.prev_reward else 0.0
-        self.prev_reward = reward
+        reward = 0.0
+        for i in range(int(math.pow(2, len(self.TLN.pis)))):
+            input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
+            self.TLN.propagate(list(map(int, list(input_values))))
+            reward += 1.0 - self.TLN.evaluate(output_values)/len(output_values)
+
+        reward /= int(math.pow(2, len(self.TLN.pis)))
+        # self.observation = reward - self.prev_reward if self.prev_reward else 0.0
+        # self.prev_reward = reward
         self.count += 1
+        # print(reward)
         done = self.count >= self.max_count
 
-        return self.observation, reward, done
+        return reward, done
     def reset(self):
-        self.prev_reward = 0
-        self.observation = 0
+        # self.prev_reward = 0
+        # self.observation = 0
         self.count = 0
-        return self.observation
+        # return self.observation
 
 if __name__ == "__main__":
     if sys.argv[1] == 'read':
         input_file = sys.argv[2]
         model = Tln_env(input_file)
-        model.step([1, -0.5, 1], [1, 1], [0])
+        model.step([1, -0.5, 1], [0])

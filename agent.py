@@ -21,8 +21,8 @@ class Network(nn.Module):
 
 class Agent():
     
-    def __init__(self):
-        self.network = Network()
+    def __init__(self, input_dim, output_dim):
+        self.network = Network(input_dim, output_dim)
         self.optimizer = optim.SGD(self.network.parameters(), lr=0.001)
 
     def learn(self, log_probs, rewards):
@@ -32,10 +32,8 @@ class Agent():
         loss.backward()
         self.optimizer.step()
 
-    def sample(self, state):
-        action_prob = self.network(torch.FloatTensor(state))
-        action_dist = Categorical(action_prob)
-        action = action_dist.sample()
-        log_prob = action_dist.log_prob(action)
-        return action.item(), log_prob
+    def sample(self, input_values):
+        action = self.network(input_values)
+
+        return action
 
