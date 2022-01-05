@@ -12,6 +12,8 @@ class Tln_env(gym.Env):
         self.range = 1000  # +/- value the randomly select guess_number can be between
         self.weight_bound = 3  # Action space bounds
         self.threshold_bound = 5  # Action space bounds
+        self.count = 0
+        self.max_count = 200
         self.TLN = Tln(inputFile)
         low, high = self.init_weight_and_threshold();
         self.action_space = spaces.Box(low=np.array(low), high=np.array(high))
@@ -48,11 +50,14 @@ class Tln_env(gym.Env):
         print("reward: ", reward)
         self.observation = reward - self.prev_reward if self.prev_reward else 0.0
         self.prev_reward = reward
+        self.count += 1
+        done = self.count >= self.max_count
 
-        return self.observation, reward
+        return self.observation, reward, done
     def reset(self):
         self.prev_reward = 0
         self.observation = 0
+        self.count = 0
         return self.observation
 
 if __name__ == "__main__":

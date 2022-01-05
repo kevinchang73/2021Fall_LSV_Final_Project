@@ -31,7 +31,7 @@ for batch in prg_bar:
         while True:
 
             action, log_prob = newAgent.sample(state)
-            next_state, reward = env.step(action)
+            next_state, reward, done = env.step(action)
 
             log_probs.append(log_prob)
             state = next_state
