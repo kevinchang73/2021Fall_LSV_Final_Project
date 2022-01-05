@@ -1,7 +1,7 @@
 from agent import Agent
 from TLN_env.env_tln import *
 import sys
-import tqdm
+from tdqm import tqdm
 import numpy as np
 import torch
 import math

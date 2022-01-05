@@ -33,7 +33,7 @@ class Agent():
         self.optimizer.step()
 
     def sample(self, input_values):
-        action = self.network(input_values)
+        action = self.network(torch.FloatTensor(input_values))
 
         return action
 
