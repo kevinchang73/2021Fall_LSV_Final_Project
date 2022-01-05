@@ -43,7 +43,7 @@ class Tln_env(gym.Env):
 
     def step(self, action, output_values):
         # assert self.action_space.contains(action)
-
+        action = list(action)
         self.TLN.set_weights(action[0:len(self.TLN.edges)])
         self.TLN.set_thresholds([0, 0] + action[len(self.TLN.edges):])
         reward = 0.0
