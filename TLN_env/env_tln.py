@@ -50,7 +50,7 @@ class Tln_env(gym.Env):
         for i in range(int(math.pow(2, len(self.TLN.pis)))):
             input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
             self.TLN.propagate(list(map(int, list(input_values))))
-            reward += 1.0 - self.TLN.evaluate(output_values)/len(output_values)
+            reward += 1.0 - self.TLN.evaluate(output_values[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)])/len(output_values[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)])
 
         reward /= int(math.pow(2, len(self.TLN.pis)))
         # self.observation = reward - self.prev_reward if self.prev_reward else 0.0
