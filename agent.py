@@ -24,7 +24,7 @@ class Agent():
     
     def __init__(self, input_dim, output_dim):
         self.network = Network(input_dim, output_dim)
-        self.optimizer = optim.SGD(self.network.parameters(), lr=0.001)
+        self.optimizer = optim.SGD(self.network.parameters(), lr=0.01)
 
     def learn(self, rewards):
         loss = (-rewards).sum()

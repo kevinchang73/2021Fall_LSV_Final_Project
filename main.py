@@ -21,7 +21,7 @@ newAgent = Agent(input_dim, output_dim)
 
 newAgent.network.train()
 
-EPISODE_PER_BATCH = 5  # 每蒐集 5 個 episodes 更新一次 agent
+EPISODE_PER_BATCH = 10  # 每蒐集 5 個 episodes 更新一次 agent
 NUM_BATCH = 400        # 總共更新 400 次
 
 avg_total_rewards, avg_final_rewards = [], []
