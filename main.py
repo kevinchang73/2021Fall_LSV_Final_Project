@@ -14,8 +14,9 @@ lines = fi.readlines()[1:]
 lines = [list(map(int, l.strip().split(" "))) for l in lines]
 
 input_dim = len(lines[0])
-
-newAgent = Agent(input_dim, len(env.TLN.nodes) + len(env.TLN.edges) - len(env.TLN.pis))
+output_dim = len(env.TLN.nodes) + len(env.TLN.edges) - len(env.TLN.pis)
+print("output_dim: ", output_dim)
+newAgent = Agent(input_dim, output_dim)
 
 newAgent.network.train()
 
