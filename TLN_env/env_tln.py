@@ -45,7 +45,7 @@ class Tln_env(gym.Env):
         # assert self.action_space.contains(action)
         action = list(action)
         self.TLN.set_weights(action[0:len(self.TLN.edges)])
-        self.TLN.set_thresholds([0, 0] + action[len(self.TLN.edges):])
+        self.TLN.set_thresholds([0]*len(self.TLN.pis) + action[len(self.TLN.edges):])
         reward = 0.0
         for i in range(int(math.pow(2, len(self.TLN.pis)))):
             input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
