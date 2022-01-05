@@ -59,7 +59,7 @@ class Tln_env(gym.Env):
         # print(reward)
         done = self.count >= self.max_count
 
-        return reward - 0.4999999999, done
+        return reward - 0.5, done
     def reset(self):
         # self.prev_reward = 0
         # self.observation = 0
