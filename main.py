@@ -15,7 +15,7 @@ lines = [list(map(int, l.strip().split(" "))) for l in lines]
 
 input_dim = len(lines[0])
 
-newAgent = Agent(input_dim, len(Tln_env.TLN.nodes) + len(Tln_env.TLN.edges))
+newAgent = Agent(input_dim, len(env.TLN.nodes) + len(env.TLN.edges))
 
 newAgent.network.train()
 
