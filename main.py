@@ -4,6 +4,7 @@ import sys
 from tqdm import tqdm
 import numpy as np
 import torch
+from torch.autograd import Variable
 import math
 import random
 
@@ -60,4 +61,4 @@ for batch in prg_bar:
     # 更新網路
     rewards = np.concatenate(rewards, axis=0)
     rewards = (rewards - np.mean(rewards)) / (np.std(rewards) + 1e-9)  # 將 reward 正規標準化
-    newAgent.learn(torch.Variable(torch.FloatTensor(rewards), requires_grad = True))
+    newAgent.learn(Variable(torch.FloatTensor(rewards), requires_grad = True))
