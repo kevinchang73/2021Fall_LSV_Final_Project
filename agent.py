@@ -16,7 +16,7 @@ class Network(nn.Module):
     def forward(self, state):
         hid = torch.tanh(self.fc1(state))
         hid = torch.tanh(self.fc2(hid))
-        return F.softmax(self.fc3(hid), dim = 1)
+        return hid
 
 
 class Agent():
