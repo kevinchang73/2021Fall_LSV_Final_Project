@@ -48,7 +48,7 @@ for batch in prg_bar:
             if done:
                 final_rewards.append(reward)
                 total_rewards.append(total_reward)
-                rewards.append(np.array(total_reward))  # 設定同一個 episode 每個 action 的 reward 都是 total reward
+                rewards.append(total_reward)  # 設定同一個 episode 每個 action 的 reward 都是 total reward
                 break
 
     # 紀錄訓練過程
