@@ -61,5 +61,5 @@ for batch in prg_bar:
     # 更新網路
     print(rewards)
     # rewards = np.concatenate(rewards, axis=0)
-    rewards = (rewards - np.mean(rewards)) / (np.std(rewards) + 1e-9)  # 將 reward 正規標準化
+    # rewards = (rewards - np.mean(rewards)) / (np.std(rewards) + 1e-9)  # 將 reward 正規標準化
     newAgent.learn(Variable(torch.from_numpy(rewards), requires_grad = True))
