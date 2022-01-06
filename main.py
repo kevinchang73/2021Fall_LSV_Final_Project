@@ -13,6 +13,7 @@ env = Tln_env(input_file + ".tln")
 fi = open(input_file + ".funct", "r")
 lines = fi.readlines()[1:]
 lines = [list(map(int, l.strip().split(" "))) for l in lines]
+print("Number of functions in training set: ", len(lines))
 
 input_dim = len(lines[0])
 output_dim = len(env.TLN.nodes) + len(env.TLN.edges) - len(env.TLN.pis)
@@ -39,11 +40,11 @@ for batch in prg_bar:
         total_reward, total_step = 0, 0
 
         while True:
-            # input_values = random.choice(lines)
-            input_values = lines[0]
-            action = newAgent.sample(input_values)
+            # output_values = random.choice(lines)
+            output_values = lines[0]
+            action = newAgent.sample(output_values)
             # print("action: ", action)
-            reward, done = env.step(action, input_values)
+            reward, done = env.step(action, output_values)
             total_reward += reward
             total_step += 1
 
