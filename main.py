@@ -39,7 +39,8 @@ for batch in prg_bar:
         total_reward, total_step = 0, 0
 
         while True:
-            input_values = random.choice(lines)
+            # input_values = random.choice(lines)
+            input_values = lines[0]
             action = newAgent.sample(input_values)
             print("action: ", action)
             reward, done = env.step(action, input_values)
