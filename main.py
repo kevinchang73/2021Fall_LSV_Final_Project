@@ -21,7 +21,7 @@ newAgent = Agent(input_dim, output_dim)
 
 newAgent.network.train()
 
-EPISODE_PER_BATCH = 10  # 每蒐集 5 個 episodes 更新一次 agent
+EPISODE_PER_BATCH = 5  # 每蒐集 5 個 episodes 更新一次 agent
 NUM_BATCH = 400        # 總共更新 400 次
 
 avg_total_rewards, avg_final_rewards = [], []
@@ -29,7 +29,7 @@ avg_total_rewards, avg_final_rewards = [], []
 prg_bar = tqdm(range(NUM_BATCH))
 for batch in prg_bar:
 
-    log_probs, rewards = [], []
+    rewards = []
     total_rewards, final_rewards = [], []
 
     # 蒐集訓練資料
@@ -48,7 +48,7 @@ for batch in prg_bar:
             if done:
                 final_rewards.append(reward)
                 total_rewards.append(total_reward)
-                rewards.append(np.full(total_step, total_reward))  # 設定同一個 episode 每個 action 的 reward 都是 total reward
+                rewards.append(np.array(total_reward))  # 設定同一個 episode 每個 action 的 reward 都是 total reward
                 break
 
     # 紀錄訓練過程
@@ -61,4 +61,4 @@ for batch in prg_bar:
     # 更新網路
     rewards = np.concatenate(rewards, axis=0)
     rewards = (rewards - np.mean(rewards)) / (np.std(rewards) + 1e-9)  # 將 reward 正規標準化
-    newAgent.learn(Variable(torch.FloatTensor(rewards), requires_grad = True))
+    newAgent.learn(Variable(torch.from_numpy(rewards), requires_grad = True))
