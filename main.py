@@ -59,6 +59,7 @@ for batch in prg_bar:
     prg_bar.set_description(f"Total: {avg_total_reward: 0.6f}, Final: {avg_final_reward: 0.6f}")
 
     # 更新網路
+    print(rewards)
     rewards = np.concatenate(rewards, axis=0)
     rewards = (rewards - np.mean(rewards)) / (np.std(rewards) + 1e-9)  # 將 reward 正規標準化
     newAgent.learn(Variable(torch.from_numpy(rewards), requires_grad = True))
