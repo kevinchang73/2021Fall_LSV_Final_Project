@@ -68,7 +68,7 @@ class Tln_env():
         # return loss(outputs, torch.tensor([0, 1], dtype = torch.long))
 
         #MSELoss
-        outputs = torch.radn(len(output_values), dtype = torch.float)
+        outputs = torch.randn(len(output_values), dtype = torch.float)
         outputs.requires_grad = True
         print("outputs: ", outputs)
         target = torch.tensor(output_values, dtype = torch.float)
