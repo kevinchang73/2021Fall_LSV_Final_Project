@@ -43,9 +43,10 @@ for batch in prg_bar:
     # print(action)
     # print("action: ", action)
     loss = env.step(action, output_values)
-    # i += 1
-    # if(i%10 == 0):
-    #     y.append(loss)
+    print(loss)
+    i += 1
+    if(i%10 == 0):
+        y.append(loss)
     newAgent.learn(Variable(loss, requires_grad = True))
     # newAgent.learn(loss)
 
