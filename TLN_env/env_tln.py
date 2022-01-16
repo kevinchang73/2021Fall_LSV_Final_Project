@@ -48,6 +48,7 @@ class Tln_env():
         # assert self.action_space.contains(action)
         # action = list(action)
         self.TLN.set_weights(action[0:len(self.TLN.edges)])
+        self.TLN.print_weights()
         # self.TLN.set_thresholds([0]*len(self.TLN.nodes))
         # outputs = torch.empty(0, dtype = torch.float)
         outputs = torch.empty(len(output_values), dtype = torch.float)
