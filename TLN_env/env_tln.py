@@ -51,16 +51,16 @@ class Tln_env():
         # self.TLN.print_weights()
         # self.TLN.set_thresholds([0]*len(self.TLN.nodes))
         # outputs = torch.empty(0, dtype = torch.float)
-        outputs = torch.zeros(len(output_values), dtype = torch.float)
-        # for i in range(int(math.pow(2, len(self.TLN.pis)))):
-        #     input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
-        #     input_values = torch.tensor(list(map(int, list(input_values))), dtype = torch.float)
-        #     self.TLN.propagate(input_values)
-        #     #CrossEntropy
-        #     # SE.extend(self.TLN.collect_outputs())
+        outputs = torch.empty(len(output_values), dtype = torch.float)
+        for i in range(int(math.pow(2, len(self.TLN.pis)))):
+            input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
+            input_values = torch.tensor(list(map(int, list(input_values))), dtype = torch.float)
+            self.TLN.propagate(input_values)
+            #CrossEntropy
+            # SE.extend(self.TLN.collect_outputs())
 
-        #     #MSELoss
-        #     outputs[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)] = torch.tensor(self.TLN.collect_outputs(), dtype = torch.float)
+            #MSELoss
+            outputs[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)] = torch.tensor(self.TLN.collect_outputs(), dtype = torch.float)
             # SE.extend(self.TLN.collect_outputs())
             # SE.append(s)
 
