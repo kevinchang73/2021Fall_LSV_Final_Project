@@ -27,7 +27,7 @@ class Agent():
 
     def learn(self, loss):
         print("loss: ", loss)
-        loss = loss.requires_grad()
+        # loss = loss.requires_grad()
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
