@@ -9,6 +9,7 @@ import torch
 import torch.nn as nn
 from torch.autograd import Variable
 
+
 class Tln_env():
 
     def __init__(self, inputFile):
@@ -45,13 +46,14 @@ class Tln_env():
     
     def step(self, action, output_values):
         # assert self.action_space.contains(action)
-        action = list(action)
+        # action = list(action)
         self.TLN.set_weights(action[0:len(self.TLN.edges)])
-        self.TLN.set_thresholds([0]*len(self.TLN.nodes))
+        # self.TLN.set_thresholds([0]*len(self.TLN.nodes))
         SE = []
         for i in range(int(math.pow(2, len(self.TLN.pis)))):
             input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
-            self.TLN.propagate(list(map(int, list(input_values))))
+            input_values = torch.tensor(list(map(int, list(input_values))), dtype = torch.float)
+            self.TLN.propagate(input_values)
             #CrossEntropy
             # SE.extend(self.TLN.collect_outputs())
 

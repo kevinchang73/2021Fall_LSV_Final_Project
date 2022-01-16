@@ -1,3 +1,4 @@
+from importlib.metadata import requires
 from agent import Agent
 from TLN_env.env_tln import *
 import sys
@@ -37,14 +38,15 @@ for batch in prg_bar:
 
     # output_values = random.choice(lines)
     output_values = lines[0]
+    output_values = torch.tensor(output_values)
     action = newAgent.sample(output_values)
     # print(action)
-    print("action: ", action)
-    # loss = env.step(action, output_values)
+    # print("action: ", action)
+    loss = env.step(action, output_values)
     # i += 1
     # if(i%10 == 0):
     #     y.append(loss)
-    newAgent.learn(action)
+    newAgent.learn(Variable(loss, requires_grad = True))
     # newAgent.learn(loss)
 
 plt(x, y)
