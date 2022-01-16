@@ -22,7 +22,7 @@ newAgent = Agent(input_dim, output_dim)
 
 newAgent.network.train()
 
-EPISODE_PER_BATCH = 5  # 每蒐集 5 個 episodes 更新一次 agent
+# EPISODE_PER_BATCH = 5  # 每蒐集 5 個 episodes 更新一次 agent
 NUM_BATCH = 40000        # 總共更新 400 次
 
 avg_total_rewards, avg_final_rewards = [], []
@@ -30,8 +30,8 @@ avg_total_rewards, avg_final_rewards = [], []
 prg_bar = tqdm(range(NUM_BATCH))
 for batch in prg_bar:
 
-    rewards = []
-    total_rewards, final_rewards = [], []
+    # rewards = []
+    # total_rewards, final_rewards = [], []
 
     # 蒐集訓練資料
     # for episode in range(EPISODE_PER_BATCH):
