@@ -56,6 +56,7 @@ for batch in prg_bar:
     # print(action)
     # print("action: ", action)
     loss = env.step(action, output_values)
+    loss.to(device)
     print("loss outside: ", loss)
     i += 1
     if(i%10 == 0):
