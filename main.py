@@ -47,7 +47,7 @@ for batch in prg_bar:
         # total_reward, total_step = 0, 0
 
     # output_values = random.choice(lines)
-    output_values = lines[-1]
+    output_values = lines[100]
     output_values = torch.tensor(output_values, dtype = torch.float)
     output_values.requires_grad = True
     output_values.to(device)
