@@ -46,8 +46,8 @@ for batch in prg_bar:
     print(loss)
     i += 1
     if(i%10 == 0):
-        y.append(loss.numpy().tolist())
+        y.append(loss)
     newAgent.learn(Variable(loss, requires_grad = True))
     # newAgent.learn(loss)
 
-plt(x, y)
+plt.plot(x, y)
