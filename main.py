@@ -55,4 +55,4 @@ for batch in prg_bar:
     # print(rewards)
     # rewards = np.concatenate(rewards, axis=0)
     # rewards = (rewards - np.mean(rewards)) / (np.std(rewards) + 1e-9)  # 將 reward 正規標準化
-    newAgent.learn(Variable(torch.from_numpy(MSE), requires_grad = True))
+    newAgent.learn(Variable(torch.from_numpy(np.array(MSE)), requires_grad = True))
