@@ -50,7 +50,7 @@ for batch in prg_bar:
     i += 1
     if(i%10 == 0):
         y.append(loss[0])
-    print(loss)
+    # print(loss)
     # 紀錄訓練過程
     # avg_total_reward = sum(total_rewards) / len(total_rewards)
     # avg_final_reward = sum(final_rewards) / len(final_rewards)
