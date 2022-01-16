@@ -47,6 +47,7 @@ for batch in prg_bar:
     action = newAgent.sample(output_values)
     # print("action: ", action)
     loss = env.step(action, output_values)
+    print("loss outside: ", loss)
     i += 1
     if(i%10 == 0):
         y.append(loss[0])
