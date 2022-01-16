@@ -14,8 +14,8 @@ class Network(nn.Module):
         self.fc3 = nn.Linear(256, output_dim)
 
     def forward(self, state):
-        hid = torch.tanh(self.fc1(state))
-        hid = torch.tanh(self.fc2(hid))
+        hid = self.fc1(state)
+        hid = self.fc2(hid)
         return torch.tanh(self.fc3(hid))
 
 
