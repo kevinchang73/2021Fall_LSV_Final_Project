@@ -58,7 +58,7 @@ class Tln_env():
             # SE.extend(self.TLN.collect_outputs())
 
             #MSELoss
-            outputs.cat(torch.tensor(self.TLN.collect_outputs(), dtype = torch.float))
+            outputs = torch.cat((outputs, torch.tensor(self.TLN.collect_outputs(), dtype = torch.float)), 1)
             # SE.extend(self.TLN.collect_outputs())
             # SE.append(s)
 
