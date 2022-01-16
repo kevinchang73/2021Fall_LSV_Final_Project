@@ -24,7 +24,7 @@ newAgent = Agent(input_dim, output_dim)
 newAgent.network.train()
 
 # EPISODE_PER_BATCH = 5  # 每蒐集 5 個 episodes 更新一次 agent
-NUM_BATCH = 40000        # 總共更新 400 次
+NUM_BATCH = 4000        # 總共更新 400 次
 
 avg_total_rewards, avg_final_rewards = [], []
 
@@ -42,8 +42,8 @@ for batch in prg_bar:
         
         # total_reward, total_step = 0, 0
 
-    output_values = random.choice(lines)
-    # output_values = lines[0]
+    # output_values = random.choice(lines)
+    output_values = lines[0]
     action = newAgent.sample(output_values)
     # print("action: ", action)
     loss = env.step(action, output_values)
