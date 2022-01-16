@@ -58,7 +58,7 @@ class Tln_env():
         # self.prev_reward = reward
         # self.count += 1
         # print(reward)
-        SE = list(map(SE, np.float))
+        SE = list(map(SE, float))
         outputs = Variable(torch.from_numpy(np.array(SE)), requires_grad = True)
         target = Variable(torch.from_numpy(np.array(output_values)), requires_grad = False)
         return nn.CrossEntropyLoss(outputs, target)
