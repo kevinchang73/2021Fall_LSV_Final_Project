@@ -7,10 +7,11 @@ import torch
 from torch.autograd import Variable
 import math
 import random
+import matplotlib.pyplot as plt;
 
 input_file = sys.argv[2]
 env = Tln_env(input_file + ".tln")
-fi = open(input_file + ".funct2", "r")
+fi = open(input_file + ".funct", "r")
 lines = fi.readlines()[1:]
 lines = [list(map(int, l.strip().split(" "))) for l in lines]
 print("Number of functions in training set: ", len(lines))
@@ -28,6 +29,9 @@ NUM_BATCH = 40000        # 總共更新 400 次
 avg_total_rewards, avg_final_rewards = [], []
 
 prg_bar = tqdm(range(NUM_BATCH))
+x = [i for i in range(NUM_BATCH/10)]
+y = []
+i = 0;
 for batch in prg_bar:
 
     # rewards = []
@@ -43,6 +47,9 @@ for batch in prg_bar:
     action = newAgent.sample(output_values)
     # print("action: ", action)
     loss = env.step(action, output_values)
+    i += 1
+    if(i%10 == 0):
+        y.append(loss.numpy().tolist()[0])
     print(loss)
     # 紀錄訓練過程
     # avg_total_reward = sum(total_rewards) / len(total_rewards)
@@ -57,3 +64,5 @@ for batch in prg_bar:
     # rewards = np.concatenate(rewards, axis=0)
     # rewards = (rewards - np.mean(rewards)) / (np.std(rewards) + 1e-9)  # 將 reward 正規標準化
     newAgent.learn(loss)
+
+plt(x, y)
