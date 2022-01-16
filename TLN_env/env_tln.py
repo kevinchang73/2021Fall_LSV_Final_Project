@@ -51,7 +51,7 @@ class Tln_env():
             input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
             self.TLN.propagate(list(map(int, list(input_values))))
             SE.append(math.pow(self.TLN.evaluate(output_values[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)]), 2))
-
+        print(self.TLN.evaluate(output_values[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)]))
         # accuracy /= int(math.pow(2, len(self.TLN.pis)))
         # self.observation = reward - self.prev_reward if self.prev_reward else 0.0
         # self.prev_reward = reward
