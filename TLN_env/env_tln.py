@@ -45,7 +45,7 @@ class Tln_env():
         # assert self.action_space.contains(action)
         action = list(action)
         self.TLN.set_weights(action[0:len(self.TLN.edges)])
-        self.TLN.set_thresholds([0]*len(self.TLN.pis) + [0]*len(self.TLN.nodes))
+        self.TLN.set_thresholds([0]*len(self.TLN.nodes))
         SE = []
         for i in range(int(math.pow(2, len(self.TLN.pis)))):
             input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
