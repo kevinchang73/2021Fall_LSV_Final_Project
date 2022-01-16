@@ -47,19 +47,20 @@ class Tln_env():
     def step(self, action, output_values):
         # assert self.action_space.contains(action)
         # action = list(action)
-        # self.TLN.set_weights(action[0:len(self.TLN.edges)])
+        self.TLN.set_weights(action[0:len(self.TLN.edges)])
         # self.TLN.set_thresholds([0]*len(self.TLN.nodes))
-        # SE = []
-        # for i in range(int(math.pow(2, len(self.TLN.pis)))):
-        #     input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
-        #     input_values = torch.tensor(list(map(int, list(input_values))), dtype = torch.float)
-        #     self.TLN.propagate(input_values)
-        #     #CrossEntropy
-        #     # SE.extend(self.TLN.collect_outputs())
+        outputs = torch.empty(0, dtype = torch.float)
+        for i in range(int(math.pow(2, len(self.TLN.pis)))):
+            input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
+            input_values = torch.tensor(list(map(int, list(input_values))), dtype = torch.float)
+            self.TLN.propagate(input_values)
+            #CrossEntropy
+            # SE.extend(self.TLN.collect_outputs())
 
-        #     #MSELoss
-        #     SE.extend(self.TLN.collect_outputs())
-        #     # SE.append(s)
+            #MSELoss
+            outputs.cat(torch.tensor(self.TLN.collect_outputs(), dtype = torch.float))
+            # SE.extend(self.TLN.collect_outputs())
+            # SE.append(s)
 
         #CrossEntropy
         # outputs = torch.tensor([SE, output_values], dtype = torch.float)
@@ -68,7 +69,7 @@ class Tln_env():
         # return loss(outputs, torch.tensor([0, 1], dtype = torch.long))
 
         #MSELoss
-        outputs = torch.randn(len(output_values), dtype = torch.float)
+        # outputs = torch.tensor(SE, dtype = torch.float)
         outputs.requires_grad = True
         print("outputs: ", outputs)
         target = torch.tensor(output_values, dtype = torch.float)
