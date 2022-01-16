@@ -10,11 +10,11 @@ import math
 class Tln_env():
 
     def __init__(self, inputFile):
-        self.range = 1000  # +/- value the randomly select guess_number can be between
-        self.weight_bound = 1  # Action space bounds
-        self.threshold_bound = 1  # Action space bounds
-        self.count = 0
-        self.max_count = 200
+        # self.range = 1000  # +/- value the randomly select guess_number can be between
+        # self.weight_bound = 1  # Action space bounds
+        # self.threshold_bound = 1  # Action space bounds
+        # self.count = 0
+        # self.max_count = 200
         self.TLN = Tln(inputFile)
         # low, high = self.init_weight_and_threshold();
         # self.action_space = spaces.Box(low=np.array(low), high=np.array(high))
@@ -46,24 +46,23 @@ class Tln_env():
         action = list(action)
         self.TLN.set_weights(action[0:len(self.TLN.edges)])
         self.TLN.set_thresholds([0]*len(self.TLN.pis) + action[len(self.TLN.edges):])
-        reward = 0.0
+        accuracy = 0.0
         for i in range(int(math.pow(2, len(self.TLN.pis)))):
             input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
             self.TLN.propagate(list(map(int, list(input_values))))
-            reward += 1.0 - self.TLN.evaluate(output_values[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)])/len(output_values[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)])
+            accuracy += 1.0 - self.TLN.evaluate(output_values[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)])/len(output_values[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)])
 
-        reward /= int(math.pow(2, len(self.TLN.pis)))
+        accuracy /= int(math.pow(2, len(self.TLN.pis)))
         # self.observation = reward - self.prev_reward if self.prev_reward else 0.0
         # self.prev_reward = reward
-        self.count += 1
+        # self.count += 1
         # print(reward)
-        done = self.count >= self.max_count
 
-        return reward, done
-    def reset(self):
+        return accuracy
+    # def reset(self):
         # self.prev_reward = 0
         # self.observation = 0
-        self.count = 0
+        # self.count = 0
         # return self.observation
 
 if __name__ == "__main__":
