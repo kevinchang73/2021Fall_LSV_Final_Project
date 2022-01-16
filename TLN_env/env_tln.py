@@ -63,8 +63,8 @@ class Tln_env():
         outputs.requires_grad = True
         target = torch.Tensor(output_values)
         target.requires_grad = False
-        print(outputs)
-        print(output_values)
+        print(len(outputs))
+        print(len(output_values))
         return nn.CrossEntropyLoss()(outputs, target)
     # def reset(self):
         # self.prev_reward = 0
