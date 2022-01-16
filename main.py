@@ -49,8 +49,8 @@ for batch in prg_bar:
     # avg_final_reward = sum(final_rewards) / len(final_rewards)
     # avg_total_rewards.append(avg_total_reward)
     # avg_final_rewards.append(avg_final_reward)
-    # prg_bar.set_description(f"CrossEntropy: {CrossEntropy: 0.6f}")
-    print("CrossEntropy: {CrossEntropy: 0.6f}")
+    prg_bar.set_description(f"CrossEntropy: {CrossEntropy: 0.6f}")
+    # print("CrossEntropy: {CrossEntropy: 0.6f}")
 
     # 更新網路
     # print(rewards)
