@@ -45,6 +45,7 @@ for batch in prg_bar:
     # output_values = random.choice(lines)
     output_values = lines[0]
     action = newAgent.sample(output_values)
+    print(action)
     # print("action: ", action)
     loss = env.step(action, output_values)
     print("loss outside: ", loss)
