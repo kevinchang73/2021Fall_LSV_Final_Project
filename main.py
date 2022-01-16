@@ -43,7 +43,7 @@ for batch in prg_bar:
         # total_reward, total_step = 0, 0
 
     # output_values = random.choice(lines)
-    output_values = lines[0]
+    output_values = lines[-1]
     action = newAgent.sample(output_values)
     print(action)
     # print("action: ", action)
@@ -51,7 +51,7 @@ for batch in prg_bar:
     print("loss outside: ", loss)
     i += 1
     if(i%10 == 0):
-        y.append(loss[0])
+        y.append(loss)
     # print(loss)
     # 紀錄訓練過程
     # avg_total_reward = sum(total_rewards) / len(total_rewards)
