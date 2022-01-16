@@ -29,7 +29,7 @@ NUM_BATCH = 40000        # 總共更新 400 次
 avg_total_rewards, avg_final_rewards = [], []
 
 prg_bar = tqdm(range(NUM_BATCH))
-x = [i for i in range(NUM_BATCH/10)]
+x = [i for i in range(int(NUM_BATCH/10))]
 y = []
 i = 0;
 for batch in prg_bar:
