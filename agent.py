@@ -9,9 +9,9 @@ class Network(nn.Module):
 
     def __init__(self, input_dim, output_dim):
         super().__init__()
-        self.fc1 = nn.Linear(input_dim, 256)
-        self.fc2 = nn.Linear(256, 1024)
-        self.fc3 = nn.Linear(1024, output_dim)
+        self.fc1 = nn.Linear(input_dim, 128)
+        self.fc2 = nn.Linear(128, 256)
+        self.fc3 = nn.Linear(256, output_dim)
 
     def forward(self, state):
         hid = torch.tanh(self.fc1(state))
@@ -35,6 +35,6 @@ class Agent():
 
     def sample(self, input_values):
         action = self.network(torch.FloatTensor(input_values))
-
+        print(action)
         return action
 
