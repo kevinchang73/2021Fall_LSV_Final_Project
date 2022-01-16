@@ -23,6 +23,7 @@ output_dim = len(env.TLN.edges)
 # print("output_dim: ", output_dim)
 newAgent = Agent(input_dim, output_dim)
 device = get_device()
+print("device: ", device)
 newAgent.network.to(device)
 
 newAgent.network.train()
