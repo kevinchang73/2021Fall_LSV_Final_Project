@@ -49,6 +49,7 @@ for batch in prg_bar:
     # output_values = random.choice(lines)
     output_values = lines[-1]
     output_values = torch.tensor(output_values)
+    output_values.requires_grad = True
     output_values.to(device)
     action = newAgent.sample(output_values)
     # print(action)
