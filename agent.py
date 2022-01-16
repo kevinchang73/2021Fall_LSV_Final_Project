@@ -28,6 +28,7 @@ class Agent():
         self.optimizer = optim.Adam(self.network.parameters(), lr=0.001)
 
     def learn(self, loss):
+        loss = torch.mean(loss)
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
