@@ -60,6 +60,8 @@ class Tln_env():
         # print(reward)
         outputs = torch.Tensor([SE, output_values]).long()
         loss = nn.CrossEntropyLoss()
+        input = torch.randn(3, 5, required_grad = True)
+        print(input)
         # outputs = torch.Tensor(SE)
         # outputs.requires_grad = True
         # target = torch.Tensor(output_values)
