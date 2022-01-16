@@ -27,7 +27,7 @@ class Agent():
         self.optimizer = optim.Adam(self.network.parameters(), lr=0.001)
 
     def learn(self, rewards):
-        loss = (-rewards).sum()
+        loss = rewards.sum()
 
         self.optimizer.zero_grad()
         loss.backward()

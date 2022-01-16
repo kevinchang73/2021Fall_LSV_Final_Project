@@ -40,25 +40,26 @@ class Tln_env():
     # def seed(self, seed=None):
     #     self.np_random, seed = seeding.np_random(seed)
     #     return [seed]
-
+    
     def step(self, action, output_values):
         # assert self.action_space.contains(action)
         action = list(action)
         self.TLN.set_weights(action[0:len(self.TLN.edges)])
         self.TLN.set_thresholds([0]*len(self.TLN.pis) + action[len(self.TLN.edges):])
         accuracy = 0.0
+        SE = []
         for i in range(int(math.pow(2, len(self.TLN.pis)))):
             input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
             self.TLN.propagate(list(map(int, list(input_values))))
-            accuracy += 1.0 - self.TLN.evaluate(output_values[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)])/len(output_values[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)])
+            SE.append(math.pow(self.TLN.evaluate(output_values[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)]), 2))
 
-        accuracy /= int(math.pow(2, len(self.TLN.pis)))
+        # accuracy /= int(math.pow(2, len(self.TLN.pis)))
         # self.observation = reward - self.prev_reward if self.prev_reward else 0.0
         # self.prev_reward = reward
         # self.count += 1
         # print(reward)
-
-        return accuracy
+        SE = np.array(SE)
+        return np.mean(SE)
     # def reset(self):
         # self.prev_reward = 0
         # self.observation = 0
