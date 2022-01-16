@@ -33,10 +33,10 @@ class Agent():
         loss.backward()
         self.optimizer.step()
 
-    def sample(self, input_values):
+    def sample(self, output_values):
         # input_values = torch.FloatTensor(input_values)
-        input_values = input_values.to(self.device)
-        action = self.network(input_values)
+        output_values = output_values.to(self.device)
+        weight = self.network(output_values)
         # print(action)
-        return action
+        return weight
 

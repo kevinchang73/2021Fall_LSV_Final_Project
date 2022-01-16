@@ -1,4 +1,3 @@
-# from importlib.metadata import requires
 from agent import Agent
 from TLN_env.env_tln import *
 import sys
@@ -27,7 +26,6 @@ newAgent.network.train()
 # EPISODE_PER_BATCH = 5  # 每蒐集 5 個 episodes 更新一次 agent
 NUM_BATCH = 4000        # 總共更新 400 次
 
-avg_total_rewards, avg_final_rewards = [], []
 
 prg_bar = tqdm(range(NUM_BATCH))
 x = [i for i in range(int(NUM_BATCH/10))]
@@ -35,19 +33,16 @@ y = []
 i = 0;
 for batch in prg_bar:
 
-
     output_values = random.choice(lines)
-    # output_values = lines[1000]
     output_values = torch.tensor(output_values, dtype = torch.float)
-    action = newAgent.sample(output_values)
-    # print(action)
+    weight = newAgent.sample(output_values)
     # print("action: ", action)
-    loss = env.step(action, output_values)
+    loss = env.step(weight, output_values)
     print(loss)
     i += 1
     if(i%10 == 0):
         y.append(loss)
     newAgent.learn(Variable(loss, requires_grad = True))
-    # newAgent.learn(loss)
 
 plt.plot(x, y)
+plt.savefig("Case2.jpg")
