@@ -64,7 +64,7 @@ class Tln_env():
         # input = torch.randn(3, 5, requires_grad = True)
         # print(input)
         # outputs = torch.Tensor(SE)
-        # outputs.requires_grad = True
+        outputs.requires_grad = True
         # target = torch.Tensor(output_values)
         # target.requires_grad = False
         # outputs = torch.Tensor()
