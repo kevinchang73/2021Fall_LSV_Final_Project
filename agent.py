@@ -26,11 +26,10 @@ class Agent():
         self.network = Network(input_dim, output_dim)
         self.optimizer = optim.Adam(self.network.parameters(), lr=0.001)
 
-    def learn(self, rewards):
-        loss = rewards.sum()
+    def learn(self, CrossEntropy):
 
         self.optimizer.zero_grad()
-        loss.backward()
+        CrossEntropy.backward()
         self.optimizer.step()
 
     def sample(self, input_values):

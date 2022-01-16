@@ -5,7 +5,9 @@ import numpy as np
 from TLN_env.TLN.TLN import Tln
 import sys
 import math
-
+import torch
+import torch.nn as nn
+from torch.autograd import Variable
 
 class Tln_env():
 
@@ -50,15 +52,15 @@ class Tln_env():
         for i in range(int(math.pow(2, len(self.TLN.pis)))):
             input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
             self.TLN.propagate(list(map(int, list(input_values))))
-            SE.append(math.pow(self.TLN.evaluate(output_values[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)]), 2))
-        print(self.TLN.evaluate(output_values[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)]))
+            SE.extend(self.TLN.collect_outputs())
         # accuracy /= int(math.pow(2, len(self.TLN.pis)))
         # self.observation = reward - self.prev_reward if self.prev_reward else 0.0
         # self.prev_reward = reward
         # self.count += 1
         # print(reward)
-        SE = np.array(SE)
-        return np.mean(SE)
+        outputs = Variable(torch.from_numpy(np.array(SE)), requires_grad = True)
+        target = Variable(torch.from_numpy(np.array(output_values)), requires_grad = False)
+        return nn.CrossEntropyLoss(outputs, target)
     # def reset(self):
         # self.prev_reward = 0
         # self.observation = 0
