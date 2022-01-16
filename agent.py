@@ -37,6 +37,6 @@ class Agent():
         # input_values = torch.FloatTensor(input_values)
         input_values = input_values.to(self.device)
         action = self.network(input_values)
-        print(action)
+        # print(action)
         return action
 
