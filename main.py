@@ -49,7 +49,7 @@ for batch in prg_bar:
     loss = env.step(action, output_values)
     i += 1
     if(i%10 == 0):
-        y.append(loss.numpy().tolist()[0])
+        y.append(loss[0])
     print(loss)
     # 紀錄訓練過程
     # avg_total_reward = sum(total_rewards) / len(total_rewards)
