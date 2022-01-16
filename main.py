@@ -16,7 +16,7 @@ lines = [list(map(int, l.strip().split(" "))) for l in lines]
 print("Number of functions in training set: ", len(lines))
 
 input_dim = len(lines[0])
-output_dim = len(env.TLN.nodes) + len(env.TLN.edges) - len(env.TLN.pis)
+output_dim = len(env.TLN.edges)
 # print("output_dim: ", output_dim)
 newAgent = Agent(input_dim, output_dim)
 
