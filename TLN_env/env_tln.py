@@ -49,7 +49,8 @@ class Tln_env():
         # action = list(action)
         self.TLN.set_weights(action[0:len(self.TLN.edges)])
         # self.TLN.set_thresholds([0]*len(self.TLN.nodes))
-        outputs = torch.empty(0, dtype = torch.float)
+        # outputs = torch.empty(0, dtype = torch.float)
+        flag = True
         for i in range(int(math.pow(2, len(self.TLN.pis)))):
             input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
             input_values = torch.tensor(list(map(int, list(input_values))), dtype = torch.float)
@@ -58,7 +59,10 @@ class Tln_env():
             # SE.extend(self.TLN.collect_outputs())
 
             #MSELoss
-            outputs = torch.cat((outputs, torch.tensor(self.TLN.collect_outputs(), dtype = torch.float)), 1)
+            if(flag):
+                outputs = torch.tensor(self.TLN.collect_outputs(), dtype = torch.float)
+            else:
+                outputs = torch.cat((outputs, torch.tensor(self.TLN.collect_outputs(), dtype = torch.float)), 1)
             # SE.extend(self.TLN.collect_outputs())
             # SE.append(s)
 
