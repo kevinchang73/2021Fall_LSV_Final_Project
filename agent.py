@@ -35,6 +35,6 @@ class Agent():
 
     def sample(self, input_values):
         action = self.network(torch.FloatTensor(input_values))
-        print(action)
+        # print(action)
         return action
 
