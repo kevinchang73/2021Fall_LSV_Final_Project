@@ -23,8 +23,9 @@ class Agent():
     
     def __init__(self, input_dim, output_dim):
         self.network = Network(input_dim, output_dim)
-        device = "cuda:0" if torch.cuda.is_available() else "cpu"
-        self.network.to(device)
+        self.device = "cuda:0" if torch.cuda.is_available() else "cpu"
+        print("model: ", self.device)
+        self.network.to(self.device)
         self.optimizer = optim.Adam(self.network.parameters(), lr=0.001)
 
     def learn(self, lo):
@@ -35,7 +36,10 @@ class Agent():
         self.optimizer.step()
 
     def sample(self, input_values):
-        action = self.network(torch.FloatTensor(input_values))
+        input_values = torch.FloatTensor(input_values)
+        print("input: ", self.device)
+        input_values.to(self.device)
+        action = self.network()
         print(action)
         return action
 
