@@ -1,4 +1,4 @@
-from importlib.metadata import requires
+# from importlib.metadata import requires
 from agent import Agent
 from TLN_env.env_tln import *
 import sys
