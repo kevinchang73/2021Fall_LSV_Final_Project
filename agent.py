@@ -23,6 +23,8 @@ class Agent():
     
     def __init__(self, input_dim, output_dim):
         self.network = Network(input_dim, output_dim)
+        device = "cuda:0" if torch.cuda.is_available() else "cpu"
+        self.network.to(device)
         self.optimizer = optim.Adam(self.network.parameters(), lr=0.001)
 
     def learn(self, lo):
