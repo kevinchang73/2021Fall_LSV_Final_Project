@@ -42,7 +42,7 @@ for batch in prg_bar:
     # output_values = lines[0]
     action = newAgent.sample(output_values)
     # print("action: ", action)
-    CrossEntropy = env.step(action, output_values)
+    loss = env.step(action, output_values)
 
     # 紀錄訓練過程
     # avg_total_reward = sum(total_rewards) / len(total_rewards)

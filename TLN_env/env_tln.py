@@ -52,23 +52,25 @@ class Tln_env():
         for i in range(int(math.pow(2, len(self.TLN.pis)))):
             input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
             self.TLN.propagate(list(map(int, list(input_values))))
-            SE.extend(self.TLN.collect_outputs())
-        # accuracy /= int(math.pow(2, len(self.TLN.pis)))
-        # self.observation = reward - self.prev_reward if self.prev_reward else 0.0
-        # self.prev_reward = reward
-        # self.count += 1
-        # print(reward)
-        outputs = torch.tensor([SE, output_values], dtype = torch.float)
+            #CrossEntropy
+            # SE.extend(self.TLN.collect_outputs())
 
-        loss = nn.CrossEntropyLoss()
-        # input = torch.randn(3, 5, requires_grad = True)
-        # print(input)
-        # outputs = torch.Tensor(SE)
-        outputs.requires_grad = True
-        # target = torch.Tensor(output_values)
-        # target.requires_grad = False
-        # outputs = torch.Tensor()
-        return loss(outputs, torch.tensor([0, 1], dtype = torch.long))
+            #MSELoss
+            SE.append(self.TLN.evaluate(output_values[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)])/len(self.TLN.pos))
+
+        #CrossEntropy
+        # outputs = torch.tensor([SE, output_values], dtype = torch.float)
+        # loss = nn.CrossEntropyLoss()
+        # outputs.requires_grad = True
+        # return loss(outputs, torch.tensor([0, 1], dtype = torch.long))
+
+        #MSELoss
+        MSELoss = np.mean(SE)
+        MSE = torch.from_numpy(MSELoss)
+        MSE.required_grad = True
+        return MSE
+
+
     # def reset(self):
         # self.prev_reward = 0
         # self.observation = 0
