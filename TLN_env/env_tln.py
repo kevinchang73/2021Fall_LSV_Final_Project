@@ -65,7 +65,7 @@ class Tln_env():
         # return loss(outputs, torch.tensor([0, 1], dtype = torch.long))
 
         #MSELoss
-        MSELoss = np.mean(SE)
+        MSELoss = np.array([np.mean(SE)])
         MSE = torch.from_numpy(MSELoss)
         MSE.required_grad = True
         return MSE
