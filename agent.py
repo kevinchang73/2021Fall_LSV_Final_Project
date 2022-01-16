@@ -10,8 +10,14 @@ class Network(nn.Module):
     def __init__(self, input_dim, output_dim):
         super().__init__()
         self.fc1 = nn.Linear(input_dim, 512)
+        self.fc1.weight = nn.Parameter(torch.ones(input_dim, 512))
+        self.fc1.bias = nn.Parameter(torch.ones(input_dim, 512)*0.5)
         self.fc2 = nn.Linear(512, 512)
+        self.fc2.weight = nn.Parameter(torch.ones(512, 512))
+        self.fc2.bias = nn.Parameter(torch.ones(512, 512)*0.5)
         self.fc3 = nn.Linear(512, output_dim)
+        self.fc3.weight = nn.Parameter(torch.ones(512, output_dim))
+        self.fc3.bias = nn.Parameter(torch.ones(512, output_dim)*0.5)
 
     def forward(self, state):
         hid = self.fc1(state)
