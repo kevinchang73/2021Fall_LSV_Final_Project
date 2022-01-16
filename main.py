@@ -56,4 +56,4 @@ for batch in prg_bar:
     # print(rewards)
     # rewards = np.concatenate(rewards, axis=0)
     # rewards = (rewards - np.mean(rewards)) / (np.std(rewards) + 1e-9)  # 將 reward 正規標準化
-    newAgent.learn(CrossEntropy)
+    newAgent.learn(loss)
