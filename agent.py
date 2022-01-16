@@ -26,7 +26,7 @@ class Agent():
         self.optimizer = optim.Adam(self.network.parameters(), lr=0.001)
 
     def learn(self, loss):
-
+        loss = loss.requires_grad()
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
