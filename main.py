@@ -9,6 +9,8 @@ import math
 import random
 import matplotlib.pyplot as plt;
 
+def get_device():
+    return "cuda:0" if torch.cuda.is_available() else "cpu"
 input_file = sys.argv[2]
 env = Tln_env(input_file + ".tln")
 fi = open(input_file + ".funct", "r")
@@ -20,6 +22,8 @@ input_dim = len(lines[0])
 output_dim = len(env.TLN.edges)
 # print("output_dim: ", output_dim)
 newAgent = Agent(input_dim, output_dim)
+device = get_device()
+newAgent.network.to(device)
 
 newAgent.network.train()
 
@@ -44,6 +48,8 @@ for batch in prg_bar:
 
     # output_values = random.choice(lines)
     output_values = lines[-1]
+    output_values = torch.tensor(output_values)
+    output_values.to(device)
     action = newAgent.sample(output_values)
     # print(action)
     # print("action: ", action)
