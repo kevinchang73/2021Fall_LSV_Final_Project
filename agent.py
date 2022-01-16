@@ -25,9 +25,9 @@ class Agent():
         self.network = Network(input_dim, output_dim)
         self.optimizer = optim.Adam(self.network.parameters(), lr=0.001)
 
-    def learn(self, loss):
-        print("loss: ", loss)
-        # loss = loss.requires_grad()
+    def learn(self, lo):
+        print("loss: ", lo)
+        loss = lo.sum()
         self.optimizer.zero_grad()
         loss.backward()
         self.optimizer.step()
