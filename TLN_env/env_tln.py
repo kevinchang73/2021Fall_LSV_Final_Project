@@ -58,7 +58,7 @@ class Tln_env():
         # self.prev_reward = reward
         # self.count += 1
         # print(reward)
-        outputs = torch.tensor([SE, output_values])
+        outputs = torch.tensor([SE, output_values], dtype = torch.float)
         loss = nn.CrossEntropyLoss()
         # input = torch.randn(3, 5, requires_grad = True)
         # print(input)
