@@ -97,8 +97,6 @@ class Tln:
         for i in range(0, len(weights)):
             self.edges[i].weight = weights[i]
     def set_thresholds(self, thresholds): # thresholds is in the same order with self.nodes
-        # print("threshold: ż", len(thresholds))
-        # print("self.nodes: ", len(self.nodes))
         assert len(thresholds) == len(self.nodes)
         for i in range(0, len(thresholds)):
             self.nodes[i].threshold = thresholds[i]
@@ -118,13 +116,14 @@ class Tln:
                 error += 1
         return error
     
-    def collect_functions(self, funcFile, num = 30000):
+    def collect_functions(self, funcFile, randomThreshold = False, num = 30000):
         functs = set()
         count = 0
         stop_count = 0
         while len(functs) < num:
             self.random_weights()
-            self.random_thresholds()
+            if randomThreshold:
+                self.random_thresholds()
             #self.print_weights()
             #self.print_thresholds()
             funct = []
@@ -141,7 +140,8 @@ class Tln:
             else:
                 stop_count = 0
             count += 1
-            if stop_count > 100:
+            print('Number of functions = {}, stop count = {}'.format(len(functs), stop_count))
+            if stop_count > 1000:
                 break
         #print('Iterations = ' + str(count))
         out_str = []
@@ -183,7 +183,7 @@ class TlnGenerator:
         self.level = level
         self.numNodes = numNodes # number of node in each level
         self.prob = prob
-    def write_tln(self, tlnFile):
+    def write_tln(self, tlnFile, fixedInput = -1):
         f = open(tlnFile, 'w')
         out_str = []
         out_str.append('nodeID isPI isPO\n')
@@ -202,15 +202,40 @@ class TlnGenerator:
                     idCount += 1
                     out_str.append(str(idCount) + ' 0 0\n')
         out_str.append('edges\n')
-        idCount = 1
-        for i in range(self.level):
-            if i < self.level - 1:
+        if fixedInput < 0:
+            print('Randomly connect!')
+            idCount = 1
+            for i in range(self.level-1):
                 for u in range(idCount, idCount+self.numNodes[i]):
                     for v in range(idCount+self.numNodes[i], idCount+self.numNodes[i]+self.numNodes[i+1]):
                         temp = random.random()
                         if temp < self.prob:
                             out_str.append(str(u) + ' -> ' + str(v) + '\n')
                 idCount += self.numNodes[i]
+        else: # Only adjacent layers may be connected
+            print('Fix input!')
+            idCount = self.numNodes[0] # number of PIs
+            for i in range(1, self.level):
+                assert self.numNodes[i-1] <= 2*self.numNodes[i]
+                while True:
+                    connected = set()
+                    out_edges = []
+                    for v in range(idCount+1, idCount+1+self.numNodes[i]):
+                        inp1 = random.randrange(idCount-self.numNodes[i-1]+1, idCount+1)
+                        inp2 = -1
+                        while True:
+                            inp2 = random.randrange(idCount-self.numNodes[i-1]+1, idCount+1)
+                            if inp1 != inp2:
+                                break
+                        out_edges.append(str(inp1) + ' -> ' + str(v) + '\n')
+                        out_edges.append(str(inp2) + ' -> ' + str(v) + '\n')
+                        connected.add(inp1)
+                        connected.add(inp2)
+                    if len(connected) == self.numNodes[i-1]:
+                        out_str.extend(out_edges)
+                        break
+                idCount += self.numNodes[i]
+
         out_str.append('levels\n')
         out_str.append(str(self.level) + '\n')
         f.writelines(out_str)
@@ -233,9 +258,10 @@ if __name__ == "__main__":
         errorNum = myTln.evaluate(outputs)
         print('Number of errors = ' + str(errorNum))
         '''
-        myTln.collect_functions(input_file.split('.')[0]+'.funct')
+        myTln.print_thresholds()
+        myTln.collect_functions(input_file.split('.')[0]+'.funct2')
     elif sys.argv[1] == 'write':
-    # Usage: python3 TLN.py write filename prob <level> <num of nodes in each level (seperated by space)>
+    # Usage: python3 TLN.py write filename <prob | fixedInput> <level> <num of nodes in each level (seperated by space)>
         output_file = sys.argv[2]
         prob = float(sys.argv[3])
         level = int(sys.argv[4])
@@ -243,5 +269,10 @@ if __name__ == "__main__":
         numNodes = []
         for i in range(5,level+5):
             numNodes.append(int(sys.argv[i]))
-        myTlnGen = TlnGenerator(level, numNodes, prob)
-        myTlnGen.write_tln(output_file)
+        if prob > 1:
+            fixedInput = int(prob)
+            myTlnGen = TlnGenerator(level, numNodes)
+            myTlnGen.write_tln(output_file, fixedInput)
+        else:
+            myTlnGen = TlnGenerator(level, numNodes, prob)
+            myTlnGen.write_tln(output_file)
