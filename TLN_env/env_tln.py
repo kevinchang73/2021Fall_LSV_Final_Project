@@ -76,7 +76,7 @@ class Tln_env():
         print("outputs: ", outputs)
         target = torch.tensor(output_values, dtype = torch.float)
         target.requires_grad = True
-        # print("target: ", target)
+        print("target: ", target)
         # MSE = torch.from_numpy(MSELoss)
         # MSE.requires_grad = True
         return nn.MSELoss()(outputs, target)
