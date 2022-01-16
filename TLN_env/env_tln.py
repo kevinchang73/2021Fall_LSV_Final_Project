@@ -58,12 +58,12 @@ class Tln_env():
         # self.prev_reward = reward
         # self.count += 1
         # print(reward)
-        
-        outputs = torch.Tensor(SE)
-        outputs.requires_grad = True
-        target = torch.Tensor(output_values)
-        target.requires_grad = False
-        outputs = torch.Tensor([outputs, target])
+        outputs = torch.Tensor([SE, output_values])
+        # outputs = torch.Tensor(SE)
+        # outputs.requires_grad = True
+        # target = torch.Tensor(output_values)
+        # target.requires_grad = False
+        # outputs = torch.Tensor()
         return nn.CrossEntropyLoss()(outputs, torch.Tensor([0, 1]))
     # def reset(self):
         # self.prev_reward = 0
