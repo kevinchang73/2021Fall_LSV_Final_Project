@@ -41,9 +41,10 @@ newAgent.network.train()
 x = []
 total_loss = []
 NUM_EPOCH = 5
-for j in range(NUM_EPOCH):
+prg_bar = tqdm(enumerate(train_loader))
+for epoch in range(NUM_EPOCH):
     train_loss = 0
-    for i, data in enumerate(train_loader):
+    for i, data in prg_bar:
         newAgent.optimizer.zero_grad()
         # output_values = random.choice(lines)
         # output_values = lines[i]
@@ -57,7 +58,8 @@ for j in range(NUM_EPOCH):
         loss = env.step(weight, output_values)
         newAgent.learn(loss)
         train_loss += loss.item()
-    x.append(j + 1)
+        prg_bar.set_description(f"loss: " {loss.item(): .6f})
+    x.append(epoch + 1)
     total_loss.append(train_loss/len(train_set)*BATCH_SIZE)
     
 plt.plot(x, total_loss)
