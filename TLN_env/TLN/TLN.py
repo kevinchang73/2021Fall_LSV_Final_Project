@@ -33,7 +33,9 @@ class Node:
             edge.value = self.value
     def set_edge_value(self):
         for edge in self.outs:
+            assert(torch.is_tensor(self.value))
             edge.value = self.value
+            assert(torch.is_tensor(edge.value))
 
 class Edge:
     def __init__(self, u, v):
@@ -106,6 +108,7 @@ class Tln:
         assert len(weights) == len(self.edges)
         for i in range(0, len(weights)):
             self.edges[i].weight = weights[i]
+            assert(torch.is_tensor(self.edges[i].weight))
     def set_thresholds(self, thresholds): # thresholds is in the same order with self.nodes
         assert len(thresholds) == len(self.nodes)
         for i in range(0, len(thresholds)):
@@ -113,8 +116,10 @@ class Tln:
     def propagate(self, values):
         assert len(values) == len(self.pis)
         for i in range(0, len(self.pis)):
+            assert(torch.is_tensor(values[i]))
             self.pis[i].value = values[i]
             self.pis[i].set_edge_value()
+            assert(self.pis[i].value.requires_grad)
         for node in self.nodes:
             if not node.isPI:
                 node.calc_value()
