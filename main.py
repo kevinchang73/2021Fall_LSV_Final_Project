@@ -56,6 +56,11 @@ for batch in prg_bar:
     output_values = torch.tensor(output_values, dtype = torch.float)
     output_values.requires_grad = True
     weight = newAgent.sample(output_values)
+    weight_sum = weight.sum()
+    weight_sum.retain_grad()
+    weight_sum.backward()
+    print(weight_sum.grad)
+    print(output_values.grad)
     loss = env.step(weight, output_values)
     for name, params in newAgent.network.named_parameters():
         params.retain_grad()
