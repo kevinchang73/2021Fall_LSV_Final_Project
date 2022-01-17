@@ -42,7 +42,7 @@ for name, params in newAgent.network._named_parameters():
     print("grad", params.grad)
 newAgent.learn(Variable(loss, requires_grad = True))
 print("#################")
-for name, params in newAgent.network._named_parameters():
+for name, params in newAgent.network.named_parameters():
     print("name: ", name)
     print("para: ", params)
     print("required_grad: ", params.requires_grad)
