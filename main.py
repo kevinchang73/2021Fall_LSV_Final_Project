@@ -35,7 +35,7 @@ output_values = lines[0]
 output_values = torch.tensor(output_values, dtype = torch.float)
 weight = newAgent.sample(output_values)
 loss = env.step(weight, output_values)
-for name, params in newAgent.network._named_parameters():
+for name, params in newAgent.network.named_parameters():
     print("name: ", name)
     print("para: ", params)
     print("required_grad: ", params.requires_grad)
