@@ -59,7 +59,7 @@ for batch in prg_bar:
     for name, params in newAgent.network.named_parameters():
         # print("name: ", name)
         # print("para: ", params)
-        # print("required_grad: ", params.requires_grad)
+        print("required_grad: ", params.requires_grad)
         print("grad: ", params.grad)
     # print(loss)
     i += 1
