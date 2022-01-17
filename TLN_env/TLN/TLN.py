@@ -19,6 +19,7 @@ class Node:
         
         for edge in self.ins:
             assert(torch.is_tensor(edge.weight))
+            # print(edge.weight.is_leaf)
             assert(torch.is_tensor(edge.value))
             with torch.no_grad():
                 sum += edge.weight * edge.value
@@ -180,7 +181,6 @@ class Tln:
         values = []
         for node in self.pos:
             assert(torch.is_tensor(node.value))
-            print(node.value.is_leaf)
             values.append(node.value)
         return values
 
