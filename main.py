@@ -67,9 +67,12 @@ for batch in prg_bar:
     # i += 1
     # if(i%10 == 0):
     #     y.append(loss)
-    newAgent.learn(Variable(loss, requires_grad = True))
     for name, params in newAgent.network.named_parameters():
         params.retain_grad()
+        # print("name: ", name)
+        # print("para: ", params)
+    newAgent.learn(Variable(loss, requires_grad = True))
+    for name, params in newAgent.network.named_parameters():
         # print("name: ", name)
         # print("para: ", params)
         print("required_grad: ", params.requires_grad)
