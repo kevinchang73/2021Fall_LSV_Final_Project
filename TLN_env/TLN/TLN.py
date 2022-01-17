@@ -18,15 +18,15 @@ class Node:
         sum.requires_grad = True
         
         for edge in self.ins:
-            assert(torch.istensor(edge.weight))
-            assert(torch.istensor(edge.value))
+            assert(torch.is_tensor(edge.weight))
+            assert(torch.is_tensor(edge.value))
             sum += edge.weight * edge.value
-        assert(torch.istensor(self.threshold))
+        assert(torch.is_tensor(self.threshold))
         if sum >= self.threshold:
             self.value = torch.tensor(1, dtype = torch.bool)
         else:
             self.value = torch.tensor(0, dtype = torch.bool)
-        assert(torch.istensor(self.value))
+        assert(torch.is_tensor(self.value))
         for edge in self.outs:
             edge.value = self.value
     def set_edge_value(self):
