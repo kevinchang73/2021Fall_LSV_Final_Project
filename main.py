@@ -65,7 +65,7 @@ for batch in prg_bar:
         # print("name: ", name)
         print("para: ", params)
         # print("required_grad: ", params.requires_grad)
-        # print("grad: ", params.grad)
+        print("grad: ", params.grad)
     # print(weight_sum.grad)
     # print(output_values.grad)
     # loss = env.step(weight, output_values)
