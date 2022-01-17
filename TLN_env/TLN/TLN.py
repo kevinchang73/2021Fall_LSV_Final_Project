@@ -8,13 +8,13 @@ class Node:
         self.id = id
         self.isPI = isPI
         self.isPO = isPO
-        self.threshold = torch.tensor(0.0, dtype = torch.double)
+        self.threshold = torch.tensor(0.0, dtype = torch.float)
         self.threshold.requires_grad = True
         self.outs = [] #edges
         self.ins = [] #edges
-        self.value = torch.tensor(0.0, dtype = torch.double)
+        self.value = torch.tensor(0.0, dtype = torch.float)
     def calc_value(self):
-        weight_x_value = torch.empty(len(self.ins), dtype = torch.double)
+        weight_x_value = torch.empty(len(self.ins), dtype = torch.float)
         i = 0
         for edge in self.ins:
             assert(torch.is_tensor(edge.weight))
