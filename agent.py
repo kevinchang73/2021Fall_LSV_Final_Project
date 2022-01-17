@@ -30,7 +30,7 @@ class Agent():
     def __init__(self, input_dim, output_dim):
         self.network = Network(input_dim, output_dim)
         self.device = "cuda:0" if torch.cuda.is_available() else "cpu"
-        self.network = self.network.to(self.device)
+        # self.network = self.network.to(self.device)
         self.optimizer = optim.Adam(self.network.parameters(), lr=0.01)
 
     def learn(self, loss):
@@ -44,7 +44,7 @@ class Agent():
 
     def sample(self, output_values):
         # input_values = torch.FloatTensor(input_values)
-        output_values = output_values.to(self.device)
+        # output_values = output_values.to(self.device)
         weight = self.network(output_values)
         # print(action)
         return weight
