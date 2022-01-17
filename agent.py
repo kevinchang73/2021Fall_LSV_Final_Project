@@ -47,5 +47,5 @@ class Agent():
     def sample(self, output_values):
         output_values_device = output_values.to(self.device)
         weight = self.network(output_values_device)
-        return weight, output_values
+        return weight
 

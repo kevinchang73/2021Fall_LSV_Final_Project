@@ -1,24 +1,33 @@
 import sys
 import random
 import math
+import torch
 
 class Node:
     def __init__(self, id, isPI, isPO):
         self.id = id
         self.isPI = isPI
         self.isPO = isPO
-        self.threshold = 0.0
+        self.threshold = torch.tensor(0.0, dtype = torch.float)
+        self.threshold.requires_grad = True
         self.outs = [] #edges
         self.ins = [] #edges
-        self.value = bool(0)
+        self.value = torch.tensor(0, dtype = torch.boolean)
+        self.value.requires_grad = True
     def calc_value(self):
-        sum = 0
+        sum = torch.tensor(0.0, dtype = torch.float)
+        sum.requires_grad = True
+        
         for edge in self.ins:
+            assert(torch.istensor(edge.weight))
+            assert(torch.istensor(edge.value))
             sum += edge.weight * edge.value
+        assert(torch.istensor(self.threshold))
         if sum >= self.threshold:
-            self.value = True
+            self.value = torch.tensor(1, dtype = torch.boolean)
         else:
-            self.value = False
+            self.value = torch.tensor(0, dtype = torch.boolean)
+        assert(torch.istensor(self.value))
         for edge in self.outs:
             edge.value = self.value
     def set_edge_value(self):

@@ -55,9 +55,8 @@ for batch in prg_bar:
     output_values = torch.tensor(output_values, dtype = torch.float)
     output_values.requires_grad = True
     output_values.retain_grad()
-    weight, output_values = newAgent.sample(output_values)
+    weight = newAgent.sample(output_values)
     weight.retain_grad()
-    # print("action: ", action)
     loss = env.step(weight, output_values)
     loss.backward()
     print(loss.grad)
