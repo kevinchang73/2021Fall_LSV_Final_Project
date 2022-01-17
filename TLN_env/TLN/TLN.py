@@ -12,23 +12,25 @@ class Node:
         self.threshold.requires_grad = True
         self.outs = [] #edges
         self.ins = [] #edges
-        self.value = torch.tensor(0, dtype = torch.float)
+        self.value = torch.tensor(0.0, dtype = torch.float)
     def calc_value(self):
-        sum = torch.tensor(0.0, dtype = torch.float)
-        sum.requires_grad = True
-        
+        weight_x_value = torch.empty(len(self.ins), dtype = torch.float)
+        i = 0
         for edge in self.ins:
             assert(torch.is_tensor(edge.weight))
             # print(edge.weight.is_leaf)
             assert(torch.is_tensor(edge.value))
-            with torch.no_grad():
-                sum += edge.weight * edge.value
+
+            weight_x_value[i] = torch.mul(edge.weight, edge.value)
+            i += 1
             # sum += edge.weight * edge.value
         assert(torch.is_tensor(self.threshold))
-        if sum >= self.threshold:
-            self.value = torch.tensor(1.0, dtype = torch.float)
-        else:
-            self.value = torch.tensor(0.0, dtype = torch.float)
+        weight_x_value_sum = weight_x_value.sum()
+        self.value = torch.ge(weight_x_value_sum, self.threshold)
+        # if sum >= self.threshold:
+        #     self.value = torch.tensor(1.0, dtype = torch.float)
+        # else:
+        #     self.value = torch.tensor(0.0, dtype = torch.float)
         assert(torch.is_tensor(self.value))
         for edge in self.outs:
             edge.value = self.value

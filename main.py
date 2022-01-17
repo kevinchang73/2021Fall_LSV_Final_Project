@@ -56,7 +56,6 @@ for batch in prg_bar:
     output_values = torch.tensor(output_values, dtype = torch.float)
     output_values.requires_grad = True
     weight = newAgent.sample(output_values)
-    print(weight.is_leaf)
     # weight_sum = weight.sum()
     # weight_sum.retain_grad()
     # weight_sum.backward()
