@@ -30,7 +30,7 @@ class Agent():
     def __init__(self, input_dim, output_dim):
         network = Network(input_dim, output_dim)
         self.device = "cuda:0" if torch.cuda.is_available() else "cpu"
-        self.network = network.to(self.device)
+        # self.network = network.to(self.device)
         self.optimizer = optim.Adam(self.network.parameters(), lr=0.01)
         for state in self.optimizer.state.values():
             for k, v in state.items():
@@ -45,7 +45,7 @@ class Agent():
         self.optimizer.step()
 
     def sample(self, output_values):
-        output_values_device = output_values.to(self.device)
+        # output_values_device = output_values.to(self.device)
         weight = self.network(output_values_device)
         return weight
 
