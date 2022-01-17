@@ -10,7 +10,7 @@ from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 
 NUM_EPOCH = 5
-BATCH_SIZE = 5
+BATCH_SIZE = 1
 class TLNDateset(Dataset):
     def __init__(self, X):
         self.data = torch.tensor(X, dtype = torch.float)
@@ -56,7 +56,7 @@ for epoch in range(NUM_EPOCH):
         # print(loss.item())
         newAgent.learn(loss)
         train_loss += loss.item()
-        # print(train_loss)
+        print(train_loss)
 
         # print("###############")
         # for name, params in newAgent.network.named_parameters():

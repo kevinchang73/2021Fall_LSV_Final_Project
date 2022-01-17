@@ -45,9 +45,9 @@ class Tln_env():
         # print("target: ", target)
         # MSE = torch.from_numpy(MSELoss)
         # MSE.requires_grad = True
-        print()
-        print("outputs: ", outputs)
-        print("outputs_ref_values: ", outputs_ref_values)
+        # print()
+        # print("outputs: ", outputs)
+        # print("outputs_ref_values: ", outputs_ref_values)
         return nn.MSELoss()(outputs, outputs_ref_values)
 
 if __name__ == "__main__":
