@@ -56,7 +56,7 @@ for epoch in range(NUM_EPOCH):
         # print(loss.item())
         newAgent.learn(loss)
         train_loss += loss.item()
-        print(train_loss)
+        # print(train_loss)
 
         # print("###############")
         # for name, params in newAgent.network.named_parameters():

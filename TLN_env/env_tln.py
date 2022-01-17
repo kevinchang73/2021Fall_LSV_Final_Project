@@ -12,7 +12,7 @@ class Tln_env():
     def __init__(self, inputFile):
         self.TLN = Tln(inputFile)
     
-    def step(self, action, output_ref_values):
+    def step(self, action, outputs_ref_values):
         # action = list(action)
         self.TLN.set_weights(action[0:len(self.TLN.edges)])
         # self.TLN.print_weights()
@@ -41,11 +41,14 @@ class Tln_env():
         # outputs = torch.tensor(SE, dtype = torch.float)
         # print("outputs: ", outputs)
         # target = torch.tensor(output_ref_values, dtype = torch.float)
-        output_ref_values.requires_grad = True
+        outputs_ref_values.requires_grad = True
         # print("target: ", target)
         # MSE = torch.from_numpy(MSELoss)
         # MSE.requires_grad = True
-        return nn.MSELoss()(outputs, output_ref_values)
+        print()
+        print("outputs: ", outputs)
+        print("outputs_ref_values: ", outputs_ref_values)
+        return nn.MSELoss()(outputs, outputs_ref_values)
 
 if __name__ == "__main__":
     if sys.argv[1] == 'read':
