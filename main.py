@@ -9,7 +9,8 @@ import matplotlib.pyplot as plt
 from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 
-
+NUM_EPOCH = 5
+BATCH_SIZE = 5
 class TLNDateset(Dataset):
     def __init__(self, X):
         self.data = torch.tensor(X, dtype = torch.float)
@@ -28,7 +29,6 @@ lines = [list(map(int, l.strip().split(" "))) for l in lines]
 print("Number of functions in training set: ", len(lines))
 train_set = TLNDateset(lines)
 print(len(train_set))
-BATCH_SIZE = 5
 train_loader = DataLoader(train_set, batch_size = BATCH_SIZE, shuffle = True)
 print(len(train_loader))
 
@@ -40,7 +40,6 @@ newAgent = Agent(input_dim, output_dim)
 newAgent.network.train()
 x = []
 total_loss = []
-NUM_EPOCH = 5
 prg_bar = tqdm(enumerate(train_loader))
 for epoch in range(NUM_EPOCH):
     train_loss = 0
