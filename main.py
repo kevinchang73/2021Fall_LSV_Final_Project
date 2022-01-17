@@ -34,10 +34,10 @@ i = 0;
 for name, param in newAgent.network.named_parameters():
     if param.requires_grad:
         print(name)
-# output_values = lines[0]
-# output_values = torch.tensor(output_values, dtype = torch.float)
-# weight = newAgent.sample(output_values)
-# loss = env.step(weight, output_values)
+output_values = lines[0]
+output_values = torch.tensor(output_values, dtype = torch.float)
+weight = newAgent.sample(output_values)
+loss = env.step(weight, output_values)
 # print(weight)
 # print(loss)
 # for batch in prg_bar:
