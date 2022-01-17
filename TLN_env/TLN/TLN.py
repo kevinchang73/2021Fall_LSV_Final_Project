@@ -8,7 +8,7 @@ class Node:
         self.id = id
         self.isPI = isPI
         self.isPO = isPO
-        self.threshold = torch.tensor(0.0, dtype = torch.float)
+        self.threshold = torch.tensor(0.0, dtype = torch.double)
         self.threshold.requires_grad = True
         self.outs = [] #edges
         self.ins = [] #edges
