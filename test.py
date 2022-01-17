@@ -1,6 +1,6 @@
 import torch
 
-print("Trial 1: with python float")
+print("Trial 1: with python double")
 w = torch.randn(3,5,requires_grad = True) * 0.01
 
 x = torch.randn(5,4,requires_grad = True)
