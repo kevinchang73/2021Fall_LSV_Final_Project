@@ -70,13 +70,13 @@ for epoch in range(NUM_EPOCH):
         train_loss += loss.item()
         # print(train_loss)
 
-        print("###############")
-        for name, params in newAgent.network.named_parameters():
-            print("params: ", params)
+        # print("###############")
+        # for name, params in newAgent.network.named_parameters():
+        #     print("params: ", params)
         #     print("params grad: ", params.grad)
 
 
-        # prg_bar.set_description(f"loss:  {loss.item(): .6f}")
+        prg_bar.set_description(f"loss:  {loss.item(): .6f}")
     x.append(epoch + 1)
     total_loss.append(train_loss/len(train_set)*BATCH_SIZE)
     
