@@ -58,6 +58,7 @@ for batch in prg_bar:
     weight = newAgent.sample(output_values)
     weight.retain_grad()
     loss = env.step(weight, output_values)
+    loss.retain_grad()
     print(loss.grad)
     print(weight.grad)
     loss.backward()
