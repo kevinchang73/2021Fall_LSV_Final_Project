@@ -56,10 +56,11 @@ for epoch in range(NUM_EPOCH):
         # print(loss.item())
         newAgent.learn(loss)
         train_loss += loss.item()
-        print("###############")
-        for name, params in newAgent.network.named_parameters():
-            print("params: ", params)
-            print("params grad: ", params.grad)
+
+        # print("###############")
+        # for name, params in newAgent.network.named_parameters():
+        #     print("params: ", params)
+        #     print("params grad: ", params.grad)
 
 
         # prg_bar.set_description(f"loss:  {loss.item(): .6f}")
