@@ -2,12 +2,23 @@ from agent import Agent
 from TLN_env.env_tln import *
 import sys
 from tqdm import tqdm
-import numpy as np
 import torch
-from torch.autograd import Variable
 import math
 import random
 import matplotlib.pyplot as plt;
+import torch.utils.data import Dataset
+import torch.utils.data import DataLoader
+
+
+class TLNDateset(Dataset):
+    def __init__(self, X):
+        self.data = torch.tensor(X, dtype = torch.float)
+
+    def __getitem__(self, idx):
+        return self.data[idx]
+
+    def __len__(self):
+        return len(self.data)
 
 input_file = sys.argv[2]
 env = Tln_env(input_file + ".tln")
@@ -15,56 +26,32 @@ fi = open(input_file + ".funct2", "r")
 lines = fi.readlines()[1:]
 lines = [list(map(int, l.strip().split(" "))) for l in lines]
 print("Number of functions in training set: ", len(lines))
+train_set = TLNDateset(lines)
+BATCH_SIZE = 5
+train_loader = DataLoader(train_set, batch_size = BATCH_SIZE, shuffle = True)
 
-input_dim = len(lines[0])
+input_dim = len(lines[0])*BATCH_SIZE
 output_dim = len(env.TLN.edges)
-# print("output_dim: ", output_dim)
 newAgent = Agent(input_dim, output_dim)
 
 newAgent.network.train()
-
-# EPISODE_PER_BATCH = 5  # 每蒐集 5 個 episodes 更新一次 agent
-NUM_BATCH = 400        # 總共更新 400 次
-
-
-prg_bar = tqdm(range(NUM_BATCH))
-x = [i for i in range(int(NUM_BATCH/10))]
-y = []
-i = 0;
-for batch in prg_bar:
-    newAgent.optimizer.zero_grad()
-    output_values = random.choice(lines)
-    # output_values = lines[0]
-    output_values = torch.tensor(output_values, dtype = torch.float)
-    output_values.requires_grad = True
-    weight = newAgent.sample(output_values)
-    # print("Weight: ", weight)
-    # weight_sum = weight.sum()
-    # weight_sum.retain_grad()
-    # weight_sum.backward()
-    # newAgent.optimizer.step()
-    # print("##################")
-    # for name, params in newAgent.network.named_parameters():
-    #     # params.retain_grad()
-    #     # print("name: ", name)
-    #     print("para: ", params)
-    #     # print("required_grad: ", params.requires_grad)
-    #     print("grad: ", params.grad)
-    # print(weight_sum.grad)
-    # print(output_values.grad)
-    loss = env.step(weight, output_values)
-    # prg_bar.set_description(f"Total: {avg_total_reward: 4.1f}, Final: {avg_final_reward: 4.1f}")
-    # print(weight)
-    print("loss: ", loss)
-    i += 1
-    if(i%10 == 0):
-        y.append(loss)
-    # for name, params in newAgent.network.named_parameters():
-    #     params.retain_grad()
-    #     # print("name: ", name)
-    #     # print("para: ", params)
-    newAgent.learn(loss)
-
-
-plt.plot(x, y)
-plt.savefig("Case2.jpg")
+x = []
+total_loss = []
+NUM_EPOCH = 5
+for j in range(NUM_EPOCH):
+    train_loss = 0
+    for i, data in enumerate(train_loader):
+        newAgent.optimizer.zero_grad()
+        # output_values = random.choice(lines)
+        # output_values = lines[i]
+        # output_values = torch.tensor(output_values, dtype = torch.float)
+        data.requires_grad = True
+        weight = newAgent.sample(data)
+        loss = env.step(weight, data)
+        newAgent.learn(loss)
+        train_loss += loss.item()
+    x.append(j + 1)
+    total_loss.append(train_loss/len(train_set)*BATCH_SIZE)
+    
+plt.plot(x, total_loss)
+plt.savefig(input_file + ".jpg")
