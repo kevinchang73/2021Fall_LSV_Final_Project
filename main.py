@@ -60,7 +60,7 @@ for batch in prg_bar:
     weight_sum.retain_grad()
     weight_sum.backward()
     for name, params in newAgent.network.named_parameters():
-        params.retain_grad()
+        # params.retain_grad()
         # print("name: ", name)
         # print("para: ", params)
         print("required_grad: ", params.requires_grad)
