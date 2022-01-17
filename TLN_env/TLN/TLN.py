@@ -13,7 +13,6 @@ class Node:
         self.outs = [] #edges
         self.ins = [] #edges
         self.value = torch.tensor(0, dtype = torch.bool)
-        self.value.requires_grad = True
     def calc_value(self):
         sum = torch.tensor(0.0, dtype = torch.float)
         sum.requires_grad = True
