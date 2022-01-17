@@ -30,7 +30,7 @@ train_set = TLNDateset(lines)
 print(len(train_set))
 BATCH_SIZE = 5
 train_loader = DataLoader(train_set, batch_size = BATCH_SIZE, shuffle = True)
-print(len(train_loader[0]))
+print(len(train_loader))
 
 input_dim = len(lines[0])*BATCH_SIZE
 print("input: ", input_dim)
@@ -50,6 +50,7 @@ for j in range(NUM_EPOCH):
         # output_values = torch.tensor(output_values, dtype = torch.float)
         data.requires_grad = True
         print(len(data))
+        print(len(data[0]))
         weight = newAgent.sample(data)
         loss = env.step(weight, data)
         newAgent.learn(loss)
