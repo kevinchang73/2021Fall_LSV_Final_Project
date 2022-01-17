@@ -30,7 +30,7 @@ class Tln_env():
             with torch.no_grad():
                 print(self.TLN.collect_outputs())
                 for j in range(len(self.TLN.pos)):
-                    outputs[i*len(self.TLN.pos) + j] = self.TLN.collect_outputs[j]
+                    outputs[i*len(self.TLN.pos) + j] = self.TLN.collect_outputs()[j]
                 # outputs[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)] = self.TLN.collect_outputs()
             # SE.extend(self.TLN.collect_outputs())
             # SE.append(s)
