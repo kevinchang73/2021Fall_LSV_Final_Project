@@ -63,9 +63,9 @@ for batch in prg_bar:
     for name, params in newAgent.network.named_parameters():
         # params.retain_grad()
         # print("name: ", name)
-        # print("para: ", params)
-        print("required_grad: ", params.requires_grad)
-        print("grad: ", params.grad)
+        print("para: ", params)
+        # print("required_grad: ", params.requires_grad)
+        # print("grad: ", params.grad)
     # print(weight_sum.grad)
     # print(output_values.grad)
     loss = env.step(weight, output_values)
