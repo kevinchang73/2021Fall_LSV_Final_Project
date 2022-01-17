@@ -53,7 +53,7 @@ for batch in prg_bar:
     # print(output_values.grad)
     loss = env.step(weight, output_values)
     # print(weight)
-    # print(loss)
+    print(loss)
     i += 1
     if(i%10 == 0):
         y.append(loss)
