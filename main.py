@@ -30,7 +30,7 @@ train_set = TLNDateset(lines)
 print(len(train_set))
 BATCH_SIZE = 5
 train_loader = DataLoader(train_set, batch_size = BATCH_SIZE, shuffle = True)
-print(len(train_loader))
+print(len(train_loader[0]))
 
 input_dim = len(lines[0])*BATCH_SIZE
 print("input: ", input_dim)
