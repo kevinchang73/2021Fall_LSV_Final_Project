@@ -31,6 +31,7 @@ BATCH_SIZE = 5
 train_loader = DataLoader(train_set, batch_size = BATCH_SIZE, shuffle = True)
 
 input_dim = len(lines[0])*BATCH_SIZE
+print("input: ", input_dim)
 output_dim = len(env.TLN.edges)
 newAgent = Agent(input_dim, output_dim)
 
@@ -46,6 +47,7 @@ for j in range(NUM_EPOCH):
         # output_values = lines[i]
         # output_values = torch.tensor(output_values, dtype = torch.float)
         data.requires_grad = True
+        print(len(data))
         weight = newAgent.sample(data)
         loss = env.step(weight, data)
         newAgent.learn(loss)
