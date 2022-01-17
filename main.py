@@ -65,6 +65,7 @@ for batch in prg_bar:
     #     # print("para: ", params)
     #     print("required_grad: ", params.requires_grad)
     #     print("grad: ", params.grad)
+    print(weight)
     print(loss)
     # i += 1
     # if(i%10 == 0):
