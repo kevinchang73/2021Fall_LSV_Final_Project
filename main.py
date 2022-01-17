@@ -32,7 +32,7 @@ x = [i for i in range(int(NUM_BATCH/10))]
 y = []
 i = 0;
 # output_values = lines[0]
-# output_values = torch.tensor(output_values, dtype = torch.double)
+# output_values = torch.tensor(output_values, dtype = torch.float)
 # weight = newAgent.sample(output_values)
 # loss = env.step(weight, output_values)
 # for name, params in newAgent.network.named_parameters():
@@ -53,7 +53,7 @@ for batch in prg_bar:
     newAgent.optimizer.zero_grad()
     output_values = random.choice(lines)
     # output_values = lines[0]
-    output_values = torch.tensor(output_values, dtype = torch.double)
+    output_values = torch.tensor(output_values, dtype = torch.float)
     output_values.requires_grad = True
     weight = newAgent.sample(output_values)
     # weight_sum = weight.sum()
@@ -91,7 +91,7 @@ for batch in prg_bar:
     # print(output_values.requires_grad)
     # print(output_values.grad)
 # output_values = lines[0]
-# output_values = torch.tensor(output_values, dtype = torch.double)
+# output_values = torch.tensor(output_values, dtype = torch.float)
 # weight = newAgent.sample(output_values)
 # loss = env.step(weight, output_values)
 # print(weight)

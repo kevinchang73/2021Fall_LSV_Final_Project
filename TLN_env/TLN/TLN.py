@@ -8,7 +8,7 @@ class Node:
         self.id = id
         self.isPI = isPI
         self.isPO = isPO
-        self.threshold = torch.tensor(0.0, dtype = torch.double)
+        self.threshold = torch.tensor(0.0, dtype = torch.float)
         self.threshold.requires_grad = True
         self.outs = [] #edges
         self.ins = [] #edges
@@ -32,9 +32,9 @@ class Node:
         # print(self.value.requires_grad)
         print(self.value)
         # if sum >= self.threshold:
-        #     self.value = torch.tensor(1.0, dtype = torch.double)
+        #     self.value = torch.tensor(1.0, dtype = torch.float)
         # else:
-        #     self.value = torch.tensor(0.0, dtype = torch.double)
+        #     self.value = torch.tensor(0.0, dtype = torch.float)
         assert(torch.is_tensor(self.value))
         for edge in self.outs:
             edge.value = self.value
