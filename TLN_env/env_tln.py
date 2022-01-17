@@ -23,6 +23,7 @@ class Tln_env():
             input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
             input_values = torch.tensor(list(map(int, list(input_values))), dtype = torch.float)
             input_values.requires_grad = True
+            print(torch.is_leaf(input_values))
             self.TLN.propagate(input_values)
 
             #MSELoss
