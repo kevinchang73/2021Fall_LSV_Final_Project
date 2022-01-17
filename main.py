@@ -24,13 +24,19 @@ newAgent = Agent(input_dim, output_dim)
 newAgent.network.train()
 
 # EPISODE_PER_BATCH = 5  # 每蒐集 5 個 episodes 更新一次 agent
-NUM_BATCH = 4000        # 總共更新 400 次
+NUM_BATCH = 40        # 總共更新 400 次
 
 
 prg_bar = tqdm(range(NUM_BATCH))
 x = [i for i in range(int(NUM_BATCH/10))]
 y = []
 i = 0;
+output_values = lines[0]
+output_values = torch.tensor(output_values, dtype = torch.float)
+weight = newAgent.sample(output_values)
+loss = env.step(weight, output_values)
+print(weight)
+print(loss)
 for batch in prg_bar:
 
     output_values = random.choice(lines)
@@ -38,11 +44,18 @@ for batch in prg_bar:
     weight = newAgent.sample(output_values)
     # print("action: ", action)
     loss = env.step(weight, output_values)
-    print(loss)
+    # print(loss)
     i += 1
     if(i%10 == 0):
         y.append(loss)
     newAgent.learn(Variable(loss, requires_grad = True))
+output_values = lines[0]
+output_values = torch.tensor(output_values, dtype = torch.float)
+weight = newAgent.sample(output_values)
+loss = env.step(weight, output_values)
+print(weight)
+print(loss)
 
-plt.plot(x, y)
-plt.savefig("Case2.jpg")
+
+# plt.plot(x, y)
+# plt.savefig("Case2.jpg")
