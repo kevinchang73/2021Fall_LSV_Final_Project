@@ -26,10 +26,10 @@ class Tln_env():
             self.TLN.propagate(input_values)
 
             #MSELoss
-            outputs[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)] = torch.tensor(self.TLN.collect_outputs(), dtype = torch.float)
+            with torch.no_grad():
+                outputs[i*len(self.TLN.pos):(i + 1)*len(self.TLN.pos)] = self.TLN.collect_outputs()
             # SE.extend(self.TLN.collect_outputs())
             # SE.append(s)
-
         #CrossEntropy
         # outputs = torch.tensor([SE, output_values], dtype = torch.float)
         # loss = nn.CrossEntropyLoss()
