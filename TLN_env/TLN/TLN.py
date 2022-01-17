@@ -20,7 +20,9 @@ class Node:
         for edge in self.ins:
             assert(torch.is_tensor(edge.weight))
             assert(torch.is_tensor(edge.value))
-            sum += edge.weight * edge.value
+            with torch.no_grad():
+                sum += edge.weight * edge.value
+            # sum += edge.weight * edge.value
         assert(torch.is_tensor(self.threshold))
         if sum >= self.threshold:
             self.value = torch.tensor(1, dtype = torch.bool)
