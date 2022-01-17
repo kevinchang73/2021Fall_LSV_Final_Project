@@ -34,7 +34,8 @@ i = 0;
 output_values = lines[0]
 output_values = torch.tensor(output_values, dtype = torch.float)
 weight = newAgent.sample(output_values)
-# loss = env.step(weight, output_values)
+loss = env.step(weight, output_values)
+newAgent.learn(Variable(loss, requires_grad = True))
 # print(weight)
 # print(loss)
 # for batch in prg_bar:
