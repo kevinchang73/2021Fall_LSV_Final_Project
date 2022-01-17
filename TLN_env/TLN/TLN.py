@@ -180,6 +180,7 @@ class Tln:
         values = []
         for node in self.pos:
             assert(torch.is_tensor(node.value))
+            print(node.value.is_leaf)
             values.append(node.value)
         return values
 
