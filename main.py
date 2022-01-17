@@ -31,9 +31,6 @@ prg_bar = tqdm(range(NUM_BATCH))
 x = [i for i in range(int(NUM_BATCH/10))]
 y = []
 i = 0;
-for name, param in newAgent.network.named_parameters():
-    if param.requires_grad:
-        print(name)
 output_values = lines[0]
 output_values = torch.tensor(output_values, dtype = torch.float)
 weight = newAgent.sample(output_values)

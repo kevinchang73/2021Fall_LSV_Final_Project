@@ -38,7 +38,7 @@ class Agent():
         self.optimizer.zero_grad()
         loss.retain_grad()
         loss.backward()
-        print(loss.grad)
+        print(loss.clone().detach().grad)
         self.optimizer.step()
 
     def sample(self, output_values):
