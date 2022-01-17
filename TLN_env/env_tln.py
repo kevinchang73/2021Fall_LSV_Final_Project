@@ -39,12 +39,12 @@ class Tln_env():
         # outputs = torch.tensor(SE, dtype = torch.float)
         outputs.requires_grad = True
         # print("outputs: ", outputs)
-        target = torch.tensor(output_ref_values, dtype = torch.float)
-        target.requires_grad = True
+        # target = torch.tensor(output_ref_values, dtype = torch.float)
+        output_ref_values.requires_grad = True
         # print("target: ", target)
         # MSE = torch.from_numpy(MSELoss)
         # MSE.requires_grad = True
-        return nn.MSELoss()(outputs, target)
+        return nn.MSELoss()(outputs, output_ref_values)
 
 if __name__ == "__main__":
     if sys.argv[1] == 'read':
