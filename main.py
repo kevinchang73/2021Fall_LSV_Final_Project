@@ -10,7 +10,7 @@ from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 
 NUM_EPOCH = 5
-BATCH_SIZE = 1
+BATCH_SIZE = 5
 class TLNDateset(Dataset):
     def __init__(self, X):
         self.data = torch.tensor(X, dtype = torch.float)
@@ -22,7 +22,7 @@ class TLNDateset(Dataset):
         return len(self.data)
 
 input_file = sys.argv[2]
-env = Tln_env(input_file + ".tln")
+env = Tln_env(input_file + ".tln", BATCH_SIZE)
 fi = open(input_file + ".funct2", "r")
 lines = fi.readlines()[1:]
 lines = [list(map(int, l.strip().split(" "))) for l in lines]
