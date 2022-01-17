@@ -38,7 +38,7 @@ class Agent():
                     state[k] = v.cuda()
 
     def learn(self, loss):
-        # loss.retain_grad()
+        loss.retain_grad()
         loss.backward()
         # print(loss)
         # print(loss.grad)
