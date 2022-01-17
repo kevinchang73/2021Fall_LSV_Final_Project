@@ -28,7 +28,7 @@ class Node:
         weight_x_value_sum = weight_x_value.sum()
         print("tensor: ", self.threshold.requires_grad)
         print("weight_x_sum: ", weight_x_value_sum.requires_grad)
-        self.value = torch.ge(weight_x_value_sum, self.threshold)
+        self.value = torch.log(weight_x_value_sum - self.threshold)
         print(self.value.requires_grad)
         # if sum >= self.threshold:
         #     self.value = torch.tensor(1.0, dtype = torch.float)
