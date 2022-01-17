@@ -31,36 +31,41 @@ prg_bar = tqdm(range(NUM_BATCH))
 x = [i for i in range(int(NUM_BATCH/10))]
 y = []
 i = 0;
-output_values = lines[0]
-output_values = torch.tensor(output_values, dtype = torch.float)
-weight = newAgent.sample(output_values)
-loss = env.step(weight, output_values)
-for name, params in newAgent.network.named_parameters():
-    print("name: ", name)
-    print("para: ", params)
-    print("required_grad: ", params.requires_grad)
-    print("grad", params.grad)
-newAgent.learn(Variable(loss, requires_grad = True))
-print("#################")
-for name, params in newAgent.network.named_parameters():
-    print("name: ", name)
-    print("para: ", params)
-    print("required_grad: ", params.requires_grad)
-    print("grad", params.grad)
+# output_values = lines[0]
+# output_values = torch.tensor(output_values, dtype = torch.float)
+# weight = newAgent.sample(output_values)
+# loss = env.step(weight, output_values)
+# for name, params in newAgent.network.named_parameters():
+#     # print("name: ", name)
+#     # print("para: ", params)
+#     # print("required_grad: ", params.requires_grad)
+#     print("grad", params.grad)
+# newAgent.learn(Variable(loss, requires_grad = True))
+# print("#################")
+# for name, params in newAgent.network.named_parameters():
+#     print("name: ", name)
+#     print("para: ", params)
+#     print("required_grad: ", params.requires_grad)
+#     print("grad", params.grad)
 # print(weight)
 # print(loss)
-# for batch in prg_bar:
+for batch in prg_bar:
 
-#     output_values = random.choice(lines)
-#     output_values = torch.tensor(output_values, dtype = torch.float)
-#     weight = newAgent.sample(output_values)
-#     print("action: ", action)
-#     loss = env.step(weight, output_values)
-#     print(loss)
-#     i += 1
-#     if(i%10 == 0):
-#         y.append(loss)
-#     newAgent.learn(Variable(loss, requires_grad = True))
+    output_values = random.choice(lines)
+    output_values = torch.tensor(output_values, dtype = torch.float)
+    weight = newAgent.sample(output_values)
+    # print("action: ", action)
+    loss = env.step(weight, output_values)
+    for name, params in newAgent.network.named_parameters():
+        # print("name: ", name)
+        # print("para: ", params)
+        # print("required_grad: ", params.requires_grad)
+        print("grad", params.grad)
+    # print(loss)
+    i += 1
+    if(i%10 == 0):
+        y.append(loss)
+    newAgent.learn(Variable(loss, requires_grad = True))
 # output_values = lines[0]
 # output_values = torch.tensor(output_values, dtype = torch.float)
 # weight = newAgent.sample(output_values)
