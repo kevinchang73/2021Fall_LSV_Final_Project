@@ -38,6 +38,7 @@ class Agent():
         self.optimizer.zero_grad()
         loss.retain_grad()
         loss.backward()
+        print(loss)
         print(loss.grad)
         self.optimizer.step()
 
