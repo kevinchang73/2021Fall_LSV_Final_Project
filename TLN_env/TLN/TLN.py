@@ -183,6 +183,7 @@ class Tln:
         values = []
         for node in self.pos:
             assert(torch.is_tensor(node.value))
+            print(node.value.requires_grad)
             values.append(node.value)
         return values
 
