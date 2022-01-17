@@ -49,7 +49,7 @@ prg_bar = tqdm(enumerate(train_loader))
 #     print(loss)
 #     newAgent.learn(loss)
 
-#Start Training
+# Start Training
 for epoch in range(NUM_EPOCH):
     train_loss = 0
     for i, data in prg_bar:
@@ -65,7 +65,7 @@ for epoch in range(NUM_EPOCH):
         weight = newAgent.sample(output_values)
         # print(weight)
         loss = env.step(weight, output_values)
-        # print(loss.item())
+        print(loss.item())
         newAgent.learn(loss)
         train_loss += loss.item()
         # print(train_loss)
