@@ -52,7 +52,7 @@ for j in range(NUM_EPOCH):
         print(len(output_values))
         for k in range(1, BATCH_SIZE):
             print(len(data[k]))
-            output_values = torch.cat((output_values, data[k]), 1)
+            output_values = torch.cat((output_values, data[k]), 0)
         output_values.requires_grad = True
         
         weight = newAgent.sample(output_values)
