@@ -49,6 +49,7 @@ for j in range(NUM_EPOCH):
         # output_values = lines[i]
         # output_values = torch.tensor(output_values, dtype = torch.float)
         output_values = data[0]
+        print(output_values)
         for k in range(1, BATCH_SIZE):
             output_values.extend(data[k])
         output_values = torch.tensor(output_values, dtype = torch.float)
