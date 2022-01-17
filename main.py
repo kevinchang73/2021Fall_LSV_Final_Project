@@ -28,12 +28,9 @@ lines = fi.readlines()[1:]
 lines = [list(map(int, l.strip().split(" "))) for l in lines]
 print("Number of functions in training set: ", len(lines))
 train_set = TLNDateset(lines)
-print(len(train_set))
 train_loader = DataLoader(train_set, batch_size = BATCH_SIZE, shuffle = True)
-print(len(train_loader))
 
 input_dim = len(lines[0])*BATCH_SIZE
-print("input: ", input_dim)
 output_dim = len(env.TLN.edges)
 newAgent = Agent(input_dim, output_dim)
 
@@ -54,10 +51,12 @@ for epoch in range(NUM_EPOCH):
         output_values.requires_grad = True
         
         weight = newAgent.sample(output_values)
+        print(weight.item())
         loss = env.step(weight, output_values)
+        print(loss.item())
         newAgent.learn(loss)
         train_loss += loss.item()
-        prg_bar.set_description(f"loss:  {loss.item(): .6f}")
+        # prg_bar.set_description(f"loss:  {loss.item(): .6f}")
     x.append(epoch + 1)
     total_loss.append(train_loss/len(train_set)*BATCH_SIZE)
     
