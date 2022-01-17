@@ -29,7 +29,7 @@ class Tln_env():
 
                 #MSELoss
                 for j in range(len(self.TLN.pos)):
-                    outputs[k*len(outputs_ref_values)/self.batch_size + i*len(self.TLN.pos) + j] = self.TLN.collect_outputs()[j]
+                    outputs[k*int(len(outputs_ref_values)/self.batch_size) + i*len(self.TLN.pos) + j] = self.TLN.collect_outputs()[j]
 
         outputs_ref_values.requires_grad = True
         # print()
