@@ -179,6 +179,7 @@ class Tln:
     def collect_outputs(self) -> list:
         values = []
         for node in self.pos:
+            assert(torch.is_tensor(node.value))
             values.append(node.value)
         return values
 
