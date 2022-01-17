@@ -18,7 +18,7 @@ class Tln_env():
         # self.TLN.print_weights()
         # self.TLN.set_thresholds([0]*len(self.TLN.nodes))
         # outputs = torch.empty(0, dtype = torch.float)
-        outputs = torch.empty(len(output_ref_values), dtype = torch.float)
+        outputs = torch.zeros(len(output_ref_values), dtype = torch.float)
         for i in range(int(math.pow(2, len(self.TLN.pis)))):
             input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
             input_values = torch.tensor(list(map(int, list(input_values))), dtype = torch.float)
