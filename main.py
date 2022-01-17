@@ -50,6 +50,7 @@ for j in range(NUM_EPOCH):
         # output_values = torch.tensor(output_values, dtype = torch.float)
         output_values = data[0]
         for k in range(1, BATCH_SIZE):
+            print(data[k])
             output_values = torch.cat((output_values, data[k]), 1)
         output_values.requires_grad = True
         
