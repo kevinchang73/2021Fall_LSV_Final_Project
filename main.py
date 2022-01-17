@@ -57,6 +57,8 @@ for batch in prg_bar:
     output_values.retain_grad()
     weight = newAgent.sample(output_values)
     weight.retain_grad()
+    print(weight.requires_grad)
+    print(weight.grad)
     # print("action: ", action)
     loss = env.step(weight, output_values)
     for name, params in newAgent.network.named_parameters():
