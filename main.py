@@ -27,6 +27,7 @@ lines = fi.readlines()[1:]
 lines = [list(map(int, l.strip().split(" "))) for l in lines]
 print("Number of functions in training set: ", len(lines))
 train_set = TLNDateset(lines)
+print(len(train_set))
 BATCH_SIZE = 5
 train_loader = DataLoader(train_set, batch_size = BATCH_SIZE, shuffle = True)
 
