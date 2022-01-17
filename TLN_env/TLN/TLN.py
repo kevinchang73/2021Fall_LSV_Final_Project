@@ -26,8 +26,10 @@ class Node:
             # sum += edge.weight * edge.value
         assert(torch.is_tensor(self.threshold))
         weight_x_value_sum = weight_x_value.sum()
-        self.value = 1/(1 + torch.log(self.threshold - weight_x_value_sum))
+        self.value = 1/(1 + torch.exp(math.e, 1000*torch.log(self.threshold - weight_x_value_sum)))
         print(self.value.requires_grad)
+        print(math.e)
+        print(self.value)
         # if sum >= self.threshold:
         #     self.value = torch.tensor(1.0, dtype = torch.float)
         # else:
