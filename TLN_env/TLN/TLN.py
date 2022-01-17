@@ -26,6 +26,8 @@ class Node:
             # sum += edge.weight * edge.value
         assert(torch.is_tensor(self.threshold))
         weight_x_value_sum = weight_x_value.sum()
+        print("tensor: ", self.threshold.requires_grad)
+        print("weight_x_sum: ", weight_x_value_sum.requires_grad)
         self.value = torch.ge(weight_x_value_sum, self.threshold)
         print(self.value.requires_grad)
         # if sum >= self.threshold:
@@ -184,7 +186,6 @@ class Tln:
         values = []
         for node in self.pos:
             assert(torch.is_tensor(node.value))
-            # print(node.value.requires_grad)
             values.append(node.value)
         return values
 
