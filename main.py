@@ -38,7 +38,7 @@ for batch in prg_bar:
     output_values = torch.tensor(output_values, dtype = torch.float)
     output_values.requires_grad = True
     weight = newAgent.sample(output_values)
-    # print(weight)
+    print("Weight: ", weight)
     # weight_sum = weight.sum()
     # weight_sum.retain_grad()
     # weight_sum.backward()
@@ -53,8 +53,9 @@ for batch in prg_bar:
     # print(weight_sum.grad)
     # print(output_values.grad)
     loss = env.step(weight, output_values)
+    # prg_bar.set_description(f"Total: {avg_total_reward: 4.1f}, Final: {avg_final_reward: 4.1f}")
     # print(weight)
-    print(loss)
+    print("loss: ", loss)
     i += 1
     if(i%10 == 0):
         y.append(loss)
