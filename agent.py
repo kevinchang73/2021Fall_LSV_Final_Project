@@ -31,7 +31,8 @@ class Agent():
         network = Network(input_dim, output_dim)
         self.device = "cuda:0" if torch.cuda.is_available() else "cpu"
         self.network = network.to(self.device)
-        self.optimizer = optim.Adam(self.network.parameters(), lr=0.01)
+        optimizer = optim.Adam(self.network.parameters(), lr=0.01)
+        self.optimizer = optimizer.to(self.device)
 
     def learn(self, loss):
         # loss = torch.mean(loss)
