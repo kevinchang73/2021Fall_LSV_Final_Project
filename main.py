@@ -5,9 +5,9 @@ from tqdm import tqdm
 import torch
 import math
 import random
-import matplotlib.pyplot as plt;
-import torch.utils.data import Dataset
-import torch.utils.data import DataLoader
+import matplotlib.pyplot as plt
+from torch.utils.data import Dataset
+from torch.utils.data import DataLoader
 
 
 class TLNDateset(Dataset):
