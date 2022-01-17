@@ -48,11 +48,13 @@ for j in range(NUM_EPOCH):
         # output_values = random.choice(lines)
         # output_values = lines[i]
         # output_values = torch.tensor(output_values, dtype = torch.float)
-        data.requires_grad = True
-        print(len(data))
-        print(len(data[0]))
-        weight = newAgent.sample(data)
-        loss = env.step(weight, data)
+        output_values = data[0]
+        for k in range(1, BATCH_SIZE):
+            output_values.extend(data[k])
+        output_values.requires_grad = True
+        
+        weight = newAgent.sample(output_values)
+        loss = env.step(weight, output_values)
         newAgent.learn(loss)
         train_loss += loss.item()
     x.append(j + 1)
