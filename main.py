@@ -51,8 +51,8 @@ i = 0;
 # print(loss)
 for batch in prg_bar:
     newAgent.optimizer.zero_grad()
-    # output_values = random.choice(lines)
-    output_values = lines[0]
+    output_values = random.choice(lines)
+    # output_values = lines[0]
     output_values = torch.tensor(output_values, dtype = torch.float)
     output_values.requires_grad = True
     weight = newAgent.sample(output_values)
