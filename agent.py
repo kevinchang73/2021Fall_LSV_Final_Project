@@ -35,7 +35,6 @@ class Agent():
 
     def learn(self, loss):
         # loss = torch.mean(loss)
-        loss = loss.requires_grad()
         self.optimizer.zero_grad()
         loss.retain_grad()
         loss.backward()
