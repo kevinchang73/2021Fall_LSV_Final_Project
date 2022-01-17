@@ -51,7 +51,7 @@ for epoch in range(NUM_EPOCH):
         output_values.requires_grad = True
         
         weight = newAgent.sample(output_values)
-        print(weight.item())
+        print(weight)
         loss = env.step(weight, output_values)
         print(loss.item())
         newAgent.learn(loss)
