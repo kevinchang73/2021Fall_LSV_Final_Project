@@ -114,7 +114,6 @@ with torch.no_grad():
         prg_bar = tqdm(enumerate(test_loader))
         for i, data in prg_bar:
             batch_loss = torch.tensor(0.0, dtype = torch.float).to(device)
-            newAgent.optimizer.zero_grad()
             for b in range(BATCH_SIZE):
                 # output_values = random.choice(lines)
                 # output_values = lines[i]
@@ -135,8 +134,6 @@ with torch.no_grad():
                 #     print("params: ", params)
                 #     print("params grad: ", params.grad)
 
-
-            newAgent.learn(batch_loss)
             test_loss += batch_loss.item()/BATCH_SIZE
             prg_bar.set_description(f"loss:  {batch_loss.item()/BATCH_SIZE: .6f}")
         x.append(epoch + 1)
