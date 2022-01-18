@@ -28,7 +28,7 @@ fi = open(input_file + ".funct2", "r")
 lines = fi.readlines()[1:]
 lines = [list(map(int, l.strip().split(" "))) for l in lines]
 print("Number of functions in training set: ", len(lines))
-# lines = lines[:10000]
+lines = lines[:100]
 random.shuffle(lines)
 train_lines = lines[:int(len(lines)*TRAINING_DATA_RATIO)]
 test_lines = lines[int(len(lines)*TRAINING_DATA_RATIO):]
@@ -92,7 +92,7 @@ print("x: ", x)
 print("total_loss: ", total_loss)
 plt.plot(x, total_loss)
 plt.show()
-plt.savefig(input_file + "_train.jpg")
+plt.savefig(input_file + "_train.png")
 print("Traning Done")
 
 print("Start Testing")
