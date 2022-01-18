@@ -9,9 +9,8 @@ from torch.autograd import Variable
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 class Tln_env():
 
-    def __init__(self, inputFile, batch_size):
+    def __init__(self, inputFile):
         self.TLN = Tln(inputFile)
-        self.batch_size = batch_size
     
     def step(self, action, outputs_ref_values):
         # action = list(action)
@@ -20,16 +19,15 @@ class Tln_env():
         # self.TLN.set_thresholds([0]*len(self.TLN.nodes))
         # outputs = torch.empty(0, dtype = torch.float)
         outputs = torch.empty(len(outputs_ref_values), dtype = torch.float).to(device)
-        for k in range(self.batch_size):
-            for i in range(int(math.pow(2, len(self.TLN.pis)))):
-                input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
-                input_values = torch.tensor(list(map(int, list(input_values))), dtype = torch.float)
-                input_values.requires_grad = True
-                self.TLN.propagate(input_values)
+        for i in range(int(math.pow(2, len(self.TLN.pis)))):
+            input_values = "{0:b}".format(i).zfill(len(self.TLN.pis))
+            input_values = torch.tensor(list(map(int, list(input_values))), dtype = torch.float)
+            input_values.requires_grad = True
+            self.TLN.propagate(input_values)
 
-                #MSELoss
-                for j in range(len(self.TLN.pos)):
-                    outputs[k*int(len(outputs_ref_values)/self.batch_size) + i*len(self.TLN.pos) + j] = self.TLN.collect_outputs()[j]
+            #MSELoss
+            for j in range(len(self.TLN.pos)):
+                outputs[i*len(self.TLN.pos) + j] = self.TLN.collect_outputs()[j]
 
         # outputs_ref_values.requires_grad = True
         # print(outputs)
