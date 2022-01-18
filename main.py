@@ -37,7 +37,7 @@ newAgent = Agent(input_dim, output_dim)
 newAgent.network.train()
 x = []
 total_loss = []
-prg_bar = tqdm(enumerate(train_loader))
+prg_bar = enumerate(train_loader)
 
 #CONFIRM MODEL RUNNING 
 # for i in range(1000):
@@ -76,9 +76,10 @@ for epoch in range(NUM_EPOCH):
         #     print("params grad: ", params.grad)
 
 
-        prg_bar.set_description(f"loss:  {loss.item(): .6f}")
+        # prg_bar.set_description(f"loss:  {loss.item(): .6f}")
     x.append(epoch + 1)
     total_loss.append(train_loss/len(train_set)*BATCH_SIZE)
+    print(train_loss/len(train_set)*BATCH_SIZE)
     
 plt.plot(x, total_loss)
 plt.savefig(input_file + ".jpg")
