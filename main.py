@@ -8,6 +8,7 @@ import random
 import matplotlib.pyplot as plt
 from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
+import time
 
 NUM_EPOCH = 5
 BATCH_SIZE = 5
@@ -40,6 +41,7 @@ test_loader = DataLoader(test_set, batch_size = BATCH_SIZE, shuffle = True)
 input_dim = len(lines[0])*BATCH_SIZE
 output_dim = len(env.TLN.edges)
 newAgent = Agent(input_dim, output_dim)
+f = open(input_file + time.asctime(time.ctime()), "w")
 
 newAgent.network.train()
 x = []
@@ -87,11 +89,11 @@ for epoch in range(NUM_EPOCH):
     x.append(epoch + 1)
     total_loss.append(train_loss/len(train_set)*BATCH_SIZE)
     print("Average training loss: ", train_loss/len(train_set)*BATCH_SIZE)
+    f.write(str(train_loss/len(train_set)*BATCH_SIZE) + '\n')
 
 print("x: ", x)
 print("total_loss: ", total_loss)
-plt.plot(x, total_loss)
-plt.show()
+
 print("Traning Done")
 
 print("Start Testing")
@@ -112,6 +114,8 @@ with torch.no_grad():
             prg_bar.set_description(f"loss:  {loss.item(): .6f}")
         total_test_loss.append(test_loss/len(test_set)*BATCH_SIZE)
         print(test_loss/len(test_set)*BATCH_SIZE)
-    
-plt.plot(x, total_test_loss)
-plt.show()
+        f.write(str(test_loss/len(test_set)*BATCH_SIZE) + '\n')
+print("Testing Done")
+
+
+f.close()
