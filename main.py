@@ -94,9 +94,9 @@ for epoch in range(NUM_EPOCH):
         train_loss += batch_loss.item()/BATCH_SIZE
         prg_bar.set_description(f"loss:  {batch_loss.item()/BATCH_SIZE: .6f}")
     x.append(epoch + 1)
-    total_loss.append(train_loss/len(train_set))
-    print("Average training loss: ", train_loss/len(train_set))
-    f.write(str(train_loss/len(train_set)) + '\n')
+    total_loss.append(train_loss/len(train_set)*BATCH_SIZE)
+    print("Average training loss: ", train_loss/len(train_set)*BATCH_SIZE)
+    f.write(str(train_loss/len(train_set)*BATCH_SIZE) + '\n')
 
 print("x: ", x)
 print("total_loss: ", total_loss)
@@ -137,9 +137,9 @@ with torch.no_grad():
             test_loss += batch_loss.item()/BATCH_SIZE
             prg_bar.set_description(f"loss:  {batch_loss.item()/BATCH_SIZE: .6f}")
         x.append(epoch + 1)
-        total_loss.append(test_loss/len(test_set))
-        print("Average testing loss: ", test_loss/len(test_set))
-        f.write(str(test_loss/len(test_set)) + '\n')
+        total_loss.append(test_loss/len(test_set)*BATCH_SIZE)
+        print("Average testing loss: ", test_loss/len(test_set)*BATCH_SIZE)
+        f.write(str(test_loss/len(test_set)*BATCH_SIZE) + '\n')
 print("Testing Done")
 
 
