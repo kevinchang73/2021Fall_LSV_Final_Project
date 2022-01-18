@@ -1,3 +1,4 @@
+from cmath import nan
 import sys
 import random
 import math
@@ -29,7 +30,11 @@ class Node:
         # print("weight_sum: ", weight_x_value_sum)
         # print("threshold: ", self.threshold)
         # print(self.threshold - weight_x_value_sum)
+        print(self.threshold)
+        print(weight_x_value_sum)
         self.value = 1/(1 + torch.exp(1000*(self.threshold - weight_x_value_sum)))
+        if(self.value.item() == nan):
+            sys.exit()
         # print(self.value.requires_grad)
         # print(self.value)
         # if sum >= self.threshold:
