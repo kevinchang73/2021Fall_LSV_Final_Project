@@ -13,8 +13,8 @@ import time
 model_path = "./model.ckpt"
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 print(device)
-NUM_EPOCH = 5
-BATCH_SIZE = 100
+NUM_EPOCH = 10
+BATCH_SIZE = 50
 TRAINING_DATA_RATIO = 0.8
 class TLNDateset(Dataset):
     def __init__(self, X):
@@ -33,8 +33,8 @@ fi = open(input_file + ".funct2", "r")
 lines = fi.readlines()[1:]
 lines = [list(map(int, l.strip().split(" "))) for l in lines]
 print("Number of functions in training set: ", len(lines))
-# lines = lines[:10]
 random.shuffle(lines)
+lines = lines[:3000]
 train_lines = lines[:int(len(lines)*TRAINING_DATA_RATIO)]
 test_lines = lines[int(len(lines)*TRAINING_DATA_RATIO):]
 train_set = TLNDateset(train_lines)
