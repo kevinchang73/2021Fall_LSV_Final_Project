@@ -10,8 +10,9 @@ from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 import time
 
-NUM_EPOCH = 1000
-BATCH_SIZE = 100
+device = "cuda:0" if torch.cuda.is_available() else "cpu"
+NUM_EPOCH = 5
+BATCH_SIZE = 10
 TRAINING_DATA_RATIO = 0.8
 class TLNDateset(Dataset):
     def __init__(self, X):
@@ -29,7 +30,7 @@ fi = open(input_file + ".funct2", "r")
 lines = fi.readlines()[1:]
 lines = [list(map(int, l.strip().split(" "))) for l in lines]
 print("Number of functions in training set: ", len(lines))
-lines = lines[:10000]
+lines = lines[:100]
 random.shuffle(lines)
 train_lines = lines[:int(len(lines)*TRAINING_DATA_RATIO)]
 test_lines = lines[int(len(lines)*TRAINING_DATA_RATIO):]
@@ -69,11 +70,11 @@ for epoch in range(NUM_EPOCH):
         for k in range(1, BATCH_SIZE):
             output_values = torch.cat((output_values, data[k]), 0)
         output_values.requires_grad = True
-        
-        weight = newAgent.sample(output_values)
+        output_values_device = output_values.to(device)
+        weight = newAgent.sample(output_values_device)
         # print(weight)
         # print(weight)
-        loss = env.step(weight, output_values)
+        loss = env.step(weight, output_values_device)
         # print(loss.item())
         newAgent.learn(loss)
         train_loss += loss.item()

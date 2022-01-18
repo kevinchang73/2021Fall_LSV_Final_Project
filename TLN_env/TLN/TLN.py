@@ -4,6 +4,7 @@ import random
 import math
 import torch
 
+
 class Node:
     def __init__(self, id, isPI, isPO, isTest = False):
         self.id = id
