@@ -47,7 +47,7 @@ output_dim = len(env.TLN.edges)
 newAgent = Agent(input_dim, output_dim)
 
 t = time.asctime(time.localtime(time.time()))
-f = open("./" + input_file + " " + t + " train", "w")
+f = open("./" + input_file + " " + t, "w")
 
 newAgent.network.train()
 x = []
@@ -102,44 +102,39 @@ print("x: ", x)
 print("total_loss: ", total_loss)
 torch.save(newAgent.network.state_dict(), model_path)
 print("Traning Done")
-f.close()
-f = open("./" + input_file + " " + t + " test", "w")
 print("Start Testing")
 newAgent.network.eval()
 env.TLN.set_tests(True)
 total_loss = []
 with torch.no_grad():
-    for epoch in range(NUM_EPOCH):
-        test_loss = 0.0
-        prg_bar = tqdm(enumerate(test_loader))
-        for i, data in prg_bar:
-            batch_loss = torch.tensor(0.0, dtype = torch.float).to(device)
-            for b in range(BATCH_SIZE):
-                # output_values = random.choice(lines)
-                # output_values = lines[i]
-                # output_values = torch.tensor(output_values, dtype = torch.float)
-                output_values = data[b]
-                # output_values.requires_grad = True
-                output_values_device = output_values.to(device)
-                weight = newAgent.sample(output_values_device)
-                # print(weight)
-                # print(weight)
-                loss = env.step(weight, output_values_device)
-                # print(loss.item())
-                batch_loss = torch.add(batch_loss, loss)
-                # print(train_loss)
+    test_loss = 0.0
+    prg_bar = tqdm(enumerate(test_loader))
+    for i, data in prg_bar:
+        batch_loss = torch.tensor(0.0, dtype = torch.float).to(device)
+        for b in range(BATCH_SIZE):
+            # output_values = random.choice(lines)
+            # output_values = lines[i]
+            # output_values = torch.tensor(output_values, dtype = torch.float)
+            output_values = data[b]
+            # output_values.requires_grad = True
+            output_values_device = output_values.to(device)
+            weight = newAgent.sample(output_values_device)
+            # print(weight)
+            # print(weight)
+            loss = env.step(weight, output_values_device)
+            # print(loss.item())
+            batch_loss = torch.add(batch_loss, loss)
+            # print(train_loss)
 
-                # print("###############")
-                # for name, params in newAgent.network.named_parameters():
-                #     print("params: ", params)
-                #     print("params grad: ", params.grad)
+            # print("###############")
+            # for name, params in newAgent.network.named_parameters():
+            #     print("params: ", params)
+            #     print("params grad: ", params.grad)
 
-            test_loss += batch_loss.item()/BATCH_SIZE
-            prg_bar.set_description(f"loss:  {batch_loss.item()/BATCH_SIZE: .6f}")
-        x.append(epoch + 1)
-        total_loss.append(test_loss/len(test_set)*BATCH_SIZE)
-        print("Average testing loss: ", test_loss/len(test_set)*BATCH_SIZE)
-        f.write(str(test_loss/len(test_set)*BATCH_SIZE) + '\n')
+        test_loss += batch_loss.item()/BATCH_SIZE
+        prg_bar.set_description(f"error rate:  {batch_loss.item()/BATCH_SIZE: .6f}")
+    print("Testing error rate: ", test_loss/len(test_set)*BATCH_SIZE)
+    f.write(str(test_loss/len(test_set)*BATCH_SIZE) + '\n')
 print("Testing Done")
 
 
