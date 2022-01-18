@@ -32,9 +32,9 @@ env = Tln_env(input_file + ".tln")
 fi = open(input_file + ".funct2", "r")
 lines = fi.readlines()[1:]
 lines = [list(map(int, l.strip().split(" "))) for l in lines]
-print("Number of functions in training set: ", len(lines))
 random.shuffle(lines)
-lines = lines[:6000]
+lines = lines[:3000]
+print("Number of functions in training set: ", len(lines))
 train_lines = lines[:int(len(lines)*TRAINING_DATA_RATIO)]
 test_lines = lines[int(len(lines)*TRAINING_DATA_RATIO):]
 train_set = TLNDateset(train_lines)
@@ -147,6 +147,5 @@ with torch.no_grad():
     print("Testing error rate: ", test_loss/len(test_set)*BATCH_SIZE)
     f1.write(str(test_loss/len(test_set)*BATCH_SIZE) + '\n')
 print("Testing Done")
-
 
 f1.close()
