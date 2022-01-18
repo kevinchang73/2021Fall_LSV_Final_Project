@@ -29,8 +29,8 @@ lines = fi.readlines()[1:]
 lines = [list(map(int, l.strip().split(" "))) for l in lines]
 print("Number of functions in training set: ", len(lines))
 random.shuffle(lines)
-train_lines = lines[:len(lines)*TRAINING_DATA_RATIO]
-test_lines = lines[len(lines)*TRAINING_DATA_RATIO:]
+train_lines = lines[:int(len(lines)*TRAINING_DATA_RATIO)]
+test_lines = lines[int(len(lines)*TRAINING_DATA_RATIO):]
 train_set = TLNDateset(train_lines)
 test_set = TLNDateset(test_lines)
 train_loader = DataLoader(train_set, batch_size = BATCH_SIZE, shuffle = True)
