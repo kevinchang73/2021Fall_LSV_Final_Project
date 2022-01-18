@@ -28,8 +28,8 @@ class Node:
             # sum += edge.weight * edge.value
         assert(torch.is_tensor(self.threshold))
         weight_x_value_sum = weight_x_value.sum()
-        print("weight_sum: ", weight_x_value_sum)
-        print("threshold: ", self.threshold)
+        # print("weight_sum: ", weight_x_value_sum)
+        # print("threshold: ", self.threshold)
         # print(self.threshold - weight_x_value_sum)
         if(self.isTest):
             self.value = torch.ge(weight_x_value_sum, self.threshold)
