@@ -5,7 +5,7 @@ import math
 import torch
 
 class Node:
-    def __init__(self, id, isPI, isPO):
+    def __init__(self, id, isPI, isPO, isTest = False):
         self.id = id
         self.isPI = isPI
         self.isPO = isPO
@@ -14,6 +14,7 @@ class Node:
         self.outs = [] #edges
         self.ins = [] #edges
         self.value = torch.tensor(0.0, dtype = torch.float)
+        self.isTest = isTest
     def calc_value(self):
         weight_x_value = torch.empty(len(self.ins), dtype = torch.float)
         i = 0
@@ -30,7 +31,10 @@ class Node:
         print("weight_sum: ", weight_x_value_sum)
         print("threshold: ", self.threshold)
         # print(self.threshold - weight_x_value_sum)
-        self.value = 1/(1 + torch.exp(1000*(self.threshold - weight_x_value_sum)))
+        if(self.isTest):
+            self.value = torch.ge(weight_x_value_sum, self.threshold)
+        else:
+            self.value = 1/(1 + torch.exp((self.threshold - weight_x_value_sum)))
         # print(self.value.requires_grad)
         # print(self.value)
         # if sum >= self.threshold:
@@ -122,6 +126,9 @@ class Tln:
         assert len(thresholds) == len(self.nodes)
         for i in range(0, len(thresholds)):
             self.nodes[i].threshold = thresholds[i]
+    def set_tests(self, isTest):
+        for i in range(0, len(self.nodes)):
+            self.nodes[i].isTest = isTest
     def propagate(self, values):
         assert len(values) == len(self.pis)
         for i in range(0, len(self.pis)):

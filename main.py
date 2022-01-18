@@ -90,3 +90,12 @@ for epoch in range(NUM_EPOCH):
     
 plt.plot(x, total_loss)
 plt.savefig(input_file + ".jpg")
+env.TLN.set_tests(True)
+with torch.zero_grad():
+    prg_bar = enumerate(test_loader)
+    for epoch in range(NUM_EPOCH):
+        for i, data in prg_bar:
+            output_values = data[0]
+            for k in range(1, BATCH_SIZE):
+                output_values = torch.cat((output_values, data[k]), 0)
+            weight = newAgent.sample(output_values)
