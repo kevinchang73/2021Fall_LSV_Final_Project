@@ -4,20 +4,20 @@ import random
 import math
 import torch
 
-
+device = "cuda:0" if torch.cuda.is_available() else "cpu"
 class Node:
     def __init__(self, id, isPI, isPO, isTest = False):
         self.id = id
         self.isPI = isPI
         self.isPO = isPO
-        self.threshold = torch.tensor(0.0, dtype = torch.float)
+        self.threshold = torch.tensor(0.0, dtype = torch.float).to(device)
         self.threshold.requires_grad = True
         self.outs = [] #edges
         self.ins = [] #edges
-        self.value = torch.tensor(0.0, dtype = torch.float)
+        self.value = torch.tensor(0.0, dtype = torch.float).to(device)
         self.isTest = isTest
     def calc_value(self):
-        weight_x_value = torch.empty(len(self.ins), dtype = torch.float)
+        weight_x_value = torch.empty(len(self.ins), dtype = torch.float).to(device)
         i = 0
         for edge in self.ins:
             assert(torch.is_tensor(edge.weight))
@@ -55,8 +55,8 @@ class Edge:
     def __init__(self, u, v):
         self.u = u
         self.v = v
-        self.weight = torch.tensor(0.0, dtype = torch.float)
-        self.value = torch.tensor(0.0, dtype = torch.float)
+        self.weight = torch.tensor(0.0, dtype = torch.float).to(device)
+        self.value = torch.tensor(0.0, dtype = torch.float).to(device)
 
 class Tln:
     def __init__(self, tlnFile):
