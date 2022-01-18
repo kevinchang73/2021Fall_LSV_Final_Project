@@ -90,8 +90,9 @@ for epoch in range(NUM_EPOCH):
     
 plt.plot(x, total_loss)
 plt.savefig(input_file + ".jpg")
+newAgent.network.eval()
 env.TLN.set_tests(True)
-with torch.zero_grad():
+with torch.no_grad():
     prg_bar = enumerate(test_loader)
     for epoch in range(NUM_EPOCH):
         for i, data in prg_bar:
