@@ -14,7 +14,7 @@ model_path = "./model.ckpt"
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 print(device)
 NUM_EPOCH = 5
-BATCH_SIZE = 2
+BATCH_SIZE = 100
 TRAINING_DATA_RATIO = 0.8
 class TLNDateset(Dataset):
     def __init__(self, X):
@@ -47,7 +47,7 @@ output_dim = len(env.TLN.edges)
 newAgent = Agent(input_dim, output_dim)
 
 t = time.asctime(time.localtime(time.time()))
-f = open(input_file + " " + t + " train", "w")
+f = open("./" + input_file + " " + t + " train", "w")
 
 newAgent.network.train()
 x = []
@@ -103,7 +103,7 @@ print("total_loss: ", total_loss)
 torch.save(newAgent.network.state_dict(), model_path)
 print("Traning Done")
 f.close()
-f = open(input_file + " " + t + " test", "w")
+f = open("./" + input_file + " " + t + " test", "w")
 print("Start Testing")
 newAgent.network.eval()
 env.TLN.set_tests(True)
@@ -138,7 +138,7 @@ with torch.no_grad():
             prg_bar.set_description(f"loss:  {batch_loss.item()/BATCH_SIZE: .6f}")
         x.append(epoch + 1)
         total_loss.append(test_loss/len(test_set))
-        print("Average training loss: ", test_loss/len(test_set))
+        print("Average testing loss: ", test_loss/len(test_set))
         f.write(str(test_loss/len(test_set)) + '\n')
 print("Testing Done")
 
