@@ -44,7 +44,6 @@ newAgent = Agent(input_dim, output_dim)
 newAgent.network.train()
 x = []
 total_loss = []
-prg_bar = tqdm(enumerate(train_loader))
 #CONFIRM MODEL RUNNING 
 # for i in range(1000):
 #     newAgent.optimizer.zero_grad()
@@ -58,6 +57,7 @@ prg_bar = tqdm(enumerate(train_loader))
 # Start Training
 for epoch in range(NUM_EPOCH):
     train_loss = 0
+    prg_bar = tqdm(enumerate(train_loader))
     for i, data in prg_bar:
         newAgent.optimizer.zero_grad()
         # output_values = random.choice(lines)
@@ -91,7 +91,8 @@ for epoch in range(NUM_EPOCH):
 print("x: ", x)
 print("total_loss: ", total_loss)
 plt.plot(x, total_loss)
-plt.savefig(input_file + ".jpg")
+plt.show()
+plt.savefig(input_file + "_train.jpg")
 print("Traning Done")
 
 print("Start Testing")
@@ -99,8 +100,8 @@ newAgent.network.eval()
 env.TLN.set_tests(True)
 total_test_loss = []
 with torch.no_grad():
-    prg_bar = tqdm(enumerate(test_loader))
     for epoch in range(NUM_EPOCH):
+        prg_bar = tqdm(enumerate(test_loader))
         test_loss = 0.0
         for i, data in prg_bar:
             output_values = data[0]
@@ -114,4 +115,5 @@ with torch.no_grad():
         print(test_loss/len(test_set)*BATCH_SIZE)
     
 plt.plot(x, total_test_loss)
-plt.savefig(input_file + ".jpg")
+plt.show()
+plt.savefig(input_file + "_test.jpg")
