@@ -112,7 +112,7 @@ with torch.no_grad():
                 output_values = torch.cat((output_values, data[k]), 0)
             output_values_device = output_values.to(device)
             weight = newAgent.sample(output_values_device)
-            loss = env.step(weight, output_values)
+            loss = env.step(weight, output_values_device)
             test_loss += loss.item()
             prg_bar.set_description(f"loss:  {loss.item(): .6f}")
         total_test_loss.append(test_loss/len(test_set)*BATCH_SIZE)
