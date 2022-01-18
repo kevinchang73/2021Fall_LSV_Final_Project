@@ -38,10 +38,7 @@ class Agent():
         #             state[k] = v.cuda()
 
     def learn(self, loss):
-        loss.retain_grad()
         loss.backward()
-        # print(loss)
-        # print(loss.grad)
         self.optimizer.step()
 
     def sample(self, output_values):
