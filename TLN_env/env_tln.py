@@ -31,7 +31,7 @@ class Tln_env():
                 for j in range(len(self.TLN.pos)):
                     outputs[k*int(len(outputs_ref_values)/self.batch_size) + i*len(self.TLN.pos) + j] = self.TLN.collect_outputs()[j]
 
-        outputs_ref_values.requires_grad = True
+        # outputs_ref_values.requires_grad = True
         # print(outputs)
         # print()
         # print("outputs: ", outputs)
