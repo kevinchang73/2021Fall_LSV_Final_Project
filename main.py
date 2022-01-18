@@ -87,7 +87,9 @@ for epoch in range(NUM_EPOCH):
     x.append(epoch + 1)
     total_loss.append(train_loss/len(train_set)*BATCH_SIZE)
     print("Average training loss: ", train_loss/len(train_set)*BATCH_SIZE)
-    
+
+print("x: ", x)
+print("total_loss: ", total_loss)
 plt.plot(x, total_loss)
 plt.savefig(input_file + ".jpg")
 print("Traning Done")
