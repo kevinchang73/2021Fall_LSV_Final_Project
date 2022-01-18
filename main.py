@@ -17,6 +17,7 @@ TRAINING_DATA_RATIO = 0.8
 class TLNDateset(Dataset):
     def __init__(self, X):
         self.data = torch.tensor(X, dtype = torch.float)
+        self.data.requires_grad = True
 
     def __getitem__(self, idx):
         return self.data[idx]
@@ -69,7 +70,7 @@ for epoch in range(NUM_EPOCH):
         output_values = data[0]
         for k in range(1, BATCH_SIZE):
             output_values = torch.cat((output_values, data[k]), 0)
-        output_values.requires_grad = True
+        # output_values.requires_grad = True
         output_values_device = output_values.to(device)
         weight = newAgent.sample(output_values_device)
         # print(weight)
