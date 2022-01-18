@@ -92,7 +92,6 @@ print("x: ", x)
 print("total_loss: ", total_loss)
 plt.plot(x, total_loss)
 plt.show()
-plt.savefig(input_file + "_train.png")
 print("Traning Done")
 
 print("Start Testing")
@@ -116,4 +115,3 @@ with torch.no_grad():
     
 plt.plot(x, total_test_loss)
 plt.show()
-plt.savefig(input_file + "_test.jpg")
