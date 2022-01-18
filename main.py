@@ -11,6 +11,7 @@ from torch.utils.data import DataLoader
 
 NUM_EPOCH = 5
 BATCH_SIZE = 5
+TRAINING_DATA_RATIO = 0.8
 class TLNDateset(Dataset):
     def __init__(self, X):
         self.data = torch.tensor(X, dtype = torch.float)
@@ -27,8 +28,13 @@ fi = open(input_file + ".funct2", "r")
 lines = fi.readlines()[1:]
 lines = [list(map(int, l.strip().split(" "))) for l in lines]
 print("Number of functions in training set: ", len(lines))
-train_set = TLNDateset(lines)
+random.shuffle(lines)
+train_lines = lines[:len(lines)*TRAINING_DATA_RATIO]
+test_lines = lines[len(lines)*TRAINING_DATA_RATIO:]
+train_set = TLNDateset(train_lines)
+test_set = TLNDateset(test_lines)
 train_loader = DataLoader(train_set, batch_size = BATCH_SIZE, shuffle = True)
+test_loader = DataLoader(test_set, batch_size = BATCH_SIZE, shuffle = True)
 
 input_dim = len(lines[0])*BATCH_SIZE
 output_dim = len(env.TLN.edges)
