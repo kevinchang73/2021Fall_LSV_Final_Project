@@ -28,6 +28,7 @@ fi = open(input_file + ".funct2", "r")
 lines = fi.readlines()[1:]
 lines = [list(map(int, l.strip().split(" "))) for l in lines]
 print("Number of functions in training set: ", len(lines))
+lines = lines[:10000]
 random.shuffle(lines)
 train_lines = lines[:int(len(lines)*TRAINING_DATA_RATIO)]
 test_lines = lines[int(len(lines)*TRAINING_DATA_RATIO):]
@@ -85,10 +86,13 @@ for epoch in range(NUM_EPOCH):
         prg_bar.set_description(f"loss:  {loss.item(): .6f}")
     x.append(epoch + 1)
     total_loss.append(train_loss/len(train_set)*BATCH_SIZE)
-    print(train_loss/len(train_set)*BATCH_SIZE)
+    print("Average training loss: ", train_loss/len(train_set)*BATCH_SIZE)
     
 plt.plot(x, total_loss)
 plt.savefig(input_file + ".jpg")
+print("Traning Done")
+
+print("Start Testing")
 newAgent.network.eval()
 env.TLN.set_tests(True)
 total_test_loss = []
