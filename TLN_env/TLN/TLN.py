@@ -29,7 +29,7 @@ class Node:
         # print("weight_sum: ", weight_x_value_sum)
         # print("threshold: ", self.threshold)
         # print(self.threshold - weight_x_value_sum)
-        self.value = 1/(1 + torch.exp(0.1*(self.threshold - weight_x_value_sum)))
+        self.value = 1/(1 + torch.exp(0.01*(self.threshold - weight_x_value_sum)))
         # print(self.value.requires_grad)
         # print(self.value)
         # if sum >= self.threshold:
