@@ -41,7 +41,7 @@ test_loader = DataLoader(test_set, batch_size = BATCH_SIZE, shuffle = True)
 input_dim = len(lines[0])*BATCH_SIZE
 output_dim = len(env.TLN.edges)
 newAgent = Agent(input_dim, output_dim)
-f = open(input_file + time.asctime(time.ctime()), "w")
+f = open(input_file + time.asctime(time.localtime(time.time())), "w")
 
 newAgent.network.train()
 x = []
