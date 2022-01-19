@@ -14,7 +14,7 @@ torch.manual_seed(0)
 model_path = "./model.ckpt"
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 print(device)
-NUM_EPOCH = 30
+NUM_EPOCH = 15
 BATCH_SIZE = 50
 TRAINING_DATA_RATIO = 0.8
 class TLNDateset(Dataset):
