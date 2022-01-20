@@ -49,7 +49,7 @@ newAgent = Agent(input_dim, output_dim)
 
 t = time.asctime(time.localtime(time.time()))
 f1 = open("./" + input_file + " " + t + " loss", "w")
-# f2 = open("./" + input_file + " " + t + " error rate", "w")
+f2 = open("./" + input_file + " " + t + " error rate", "w")
 
 newAgent.network.train()
 x = []
@@ -103,21 +103,22 @@ for epoch in range(NUM_EPOCH):
     f1.write(str(train_loss/len(train_set)*BATCH_SIZE) + '\n')
 
     # Testing
-    # newAgent.network.eval()
-    # env.TLN.set_tests(True)
-    # with torch.no_grad():
-    #     test_loss = 0.0
-    #     prg_bar = tqdm(enumerate(train_loader))
-    #     for i, data in prg_bar:
-    #         batch_loss = torch.tensor(0.0, dtype = torch.float).to(device)
-    #         for b in range(BATCH_SIZE):
-    #             output_values = data[b]
-    #             output_values_device = output_values.to(device)
-    #             weight = newAgent.sample(output_values_device)
-    #             loss = env.step(weight, output_values_device)
-    #             batch_loss = torch.add(batch_loss, loss)
-    #         test_loss += batch_loss.item()/BATCH_SIZE
-    #     f2.write(str(test_loss/len(test_set)*BATCH_SIZE) + '\n')
+    newAgent.network.eval()
+    env.TLN.set_tests(True)
+    with torch.no_grad():
+        test_loss = 0.0
+        prg_bar = tqdm(enumerate(train_loader))
+        for i, data in prg_bar:
+            batch_loss = torch.tensor(0.0, dtype = torch.float).to(device)
+            for b in range(BATCH_SIZE):
+                output_values = data[b]
+                output_values_device = output_values.to(device)
+                weight = newAgent.sample(output_values_device)
+                loss = env.step(weight, output_values_device)
+                batch_loss = torch.add(batch_loss, loss)
+            test_loss += batch_loss.item()/BATCH_SIZE
+        print("Test error rate: ", test_loss/len(test_set)*BATCH_SIZE)
+        f2.write(str(test_loss/len(test_set)*BATCH_SIZE) + '\n')
 
 print("x: ", x)
 print("total_loss: ", total_loss)
