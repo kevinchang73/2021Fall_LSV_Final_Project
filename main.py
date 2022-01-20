@@ -107,7 +107,7 @@ for epoch in range(NUM_EPOCH):
     env.TLN.set_tests(True)
     with torch.no_grad():
         test_loss = 0.0
-        prg_bar = tqdm(enumerate(test_loader))
+        prg_bar = tqdm(enumerate(train_loader))
         for i, data in prg_bar:
             batch_loss = torch.tensor(0.0, dtype = torch.float).to(device)
             for b in range(BATCH_SIZE):
@@ -117,8 +117,8 @@ for epoch in range(NUM_EPOCH):
                 loss = env.step(weight, output_values_device)
                 batch_loss = torch.add(batch_loss, loss)
             test_loss += batch_loss.item()/BATCH_SIZE
-        print("Test error rate: ", test_loss/len(test_set)*BATCH_SIZE)
-        f2.write(str(test_loss/len(test_set)*BATCH_SIZE) + '\n')
+        print("Train error rate: ", test_loss/len(train_set)*BATCH_SIZE)
+        f2.write(str(test_loss/len(train_set)*BATCH_SIZE) + '\n')
 
 print("x: ", x)
 print("total_loss: ", total_loss)
