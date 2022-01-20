@@ -107,7 +107,7 @@ for epoch in range(NUM_EPOCH):
     env.TLN.set_tests(True)
     with torch.no_grad():
         test_loss = 0.0
-        prg_bar = tqdm(enumerate(train_loader))
+        prg_bar = tqdm(enumerate(test_loader))
         for i, data in prg_bar:
             batch_loss = torch.tensor(0.0, dtype = torch.float).to(device)
             for b in range(BATCH_SIZE):
