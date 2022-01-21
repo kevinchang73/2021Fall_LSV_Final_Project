@@ -14,7 +14,7 @@ torch.manual_seed(0)
 model_path = "./model.ckpt"
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 print(device)
-NUM_EPOCH = 15
+NUM_EPOCH = 10
 BATCH_SIZE = 50
 TRAINING_DATA_RATIO = 0.8
 class TLNDateset(Dataset):
@@ -34,7 +34,7 @@ fi = open(input_file + ".funct2", "r")
 lines = fi.readlines()[1:]
 lines = [list(map(int, l.strip().split(" "))) for l in lines]
 random.shuffle(lines)
-lines = lines[:1000]
+lines = lines[:3000]
 print("Number of functions in training set: ", len(lines))
 train_lines = lines[:int(len(lines)*TRAINING_DATA_RATIO)]
 test_lines = lines[int(len(lines)*TRAINING_DATA_RATIO):]
