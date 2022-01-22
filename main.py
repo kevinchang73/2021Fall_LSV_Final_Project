@@ -34,7 +34,7 @@ fi = open(input_file + ".funct2", "r")
 lines = fi.readlines()[1:]
 lines = [list(map(int, l.strip().split(" "))) for l in lines]
 random.shuffle(lines)
-lines = lines[:10]
+lines = lines[:1]
 print("Number of functions in training set: ", len(lines))
 # train_lines = lines[:int(len(lines)*TRAINING_DATA_RATIO)]
 train_lines = lines;
