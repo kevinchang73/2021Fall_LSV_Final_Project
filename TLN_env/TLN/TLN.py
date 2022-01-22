@@ -35,7 +35,7 @@ class Node:
         if(self.isTest):
             self.value = torch.ge(weight_x_value_sum, self.threshold)
         else:
-            self.value = 1/(1 + torch.exp(10*(self.threshold - weight_x_value_sum)))
+            self.value = 1/(1 + torch.exp(20*(self.threshold - weight_x_value_sum)))
         # print(self.value.requires_grad)
         # print(self.value)
         # if sum >= self.threshold:
