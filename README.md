@@ -2,7 +2,7 @@
 
 Threshold logic network is more viable nowadays due to its compactness and strong bind to neural network applications. However, the problem of weights and thresholds determination still remains open. In this work, we introduce machine learning and propose two approaches, the function-based approach and the network-based approach, to solve the problem. Experimental results show that our method achieves near 80% accuracy in the function-based approach and 70% to 90% accuracy in the network-based approach.
 
-Please visit https://kevinchang73.github.io/projects/ for detailed information.
+Please visit https://kevinchang73.github.io/ for detailed information.
 
 ## Input file formats
 `nodeID isPI isPO` \
